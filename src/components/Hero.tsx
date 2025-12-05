@@ -106,7 +106,7 @@ export default function Hero() {
           {/* Trust Indicators */}
           <div className="flex flex-wrap gap-8 pt-6 border-t border-[#e8d5c4]/50">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c87941] to-[#ba6f3e] flex items-center justify-center text-white font-bold shadow-md">
+              <div className="w-15 h-15 rounded-full bg-gradient-to-br from-[#c87941] to-[#ba6f3e] flex items-center justify-center text-white font-bold shadow-md">
                 ✓
               </div>
               <div>
@@ -115,7 +115,7 @@ export default function Hero() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6b7f4a] to-[#5a6d3d] flex items-center justify-center text-white font-bold shadow-md">
+              <div className="w-15 h-15 rounded-full bg-gradient-to-br from-[#6b7f4a] to-[#5a6d3d] flex items-center justify-center text-white font-bold shadow-md">
                 ♥
               </div>
               <div>

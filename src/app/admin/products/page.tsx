@@ -155,7 +155,7 @@ export default function AdminProducts() {
       <div className="bg-white rounded-3xl p-8 shadow-[0_4px_20px_rgba(139,90,60,0.12)] border-2 border-[#e8d5c4]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#c87941] to-[#6b7f4a] flex items-center justify-center shadow-lg">
+            <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#c87941] to-[#6b7f4a] flex items-center justify-center shadow-lg">
               <PlusOutlined className="text-white text-3xl" />
             </div>
             <div>
@@ -272,7 +272,7 @@ export default function AdminProducts() {
         className="handcraft-modal"
       >
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] -mx-6 -mt-6 mb-6 px-8 py-6 rounded-t-2xl">
+        <div className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] -mx-6 -mt-6 mb-6 px-8 py-6 rounded-t-md">
           <h2 
             className="text-3xl font-bold text-white mb-1"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -432,7 +432,7 @@ export default function AdminProducts() {
               htmlType="submit"
               size="large"
               loading={saveMutation.isPending}
-              className="flex-1 !bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !h-12 !font-bold !shadow-lg hover:!shadow-xl hover:!-translate-y-0.5 !transition-all"
+              className="flex-1 !bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !font-bold !shadow-lg hover:!shadow-xl hover:!-translate-y-0.5 !transition-all"
               style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
             >
               {editingProduct ? "Update Product" : "Create Product"}
@@ -440,7 +440,7 @@ export default function AdminProducts() {
             <Button
               size="large"
               onClick={handleCancel}
-              className="flex-1 !border-2 !border-[#c87941] !text-[#c87941] !rounded-full !h-12 !font-bold hover:!bg-[#c87941] hover:!text-white !transition-all"
+              className="flex-1 !border-2 !border-[#c87941] !text-[#c87941] !rounded-full !font-bold hover:!bg-[#c87941] hover:!text-white !transition-all"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
               Cancel

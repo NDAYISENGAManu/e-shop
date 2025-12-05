@@ -31,7 +31,7 @@ if (config.use_env_variable) {
     // The actual connection won't be used during build
     sequelize = new Sequelize('postgresql://dummy:dummy@localhost:5432/dummy', {
       ...optimizedConfig,
-      pool: { max: 0, min: 0 }, // No actual connections during build
+      pool: { max: 1, min: 0 }, // Minimal pool for build-time
       logging: false,
     });
   } else {

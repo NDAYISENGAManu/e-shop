@@ -39,13 +39,14 @@ export default function SearchModal() {
       <Modal
         open={isOpen}
         onCancel={handleClose}
+        maskClosable={false}
         footer={null}
         width={700}
         centered
         className="search-modal"
         bodyStyle={{ padding: 0 }}
       >
-        <div className="bg-gradient-to-br from-[#8b6f47] to-[#d4a574] text-white p-6">
+        <div className="bg-gradient-to-br from-[#8b6f47] to-[#d4a574] text-white p-6 m-0">
           <h2 className="font-serif text-2xl m-0">
             Search Handcrafted Products
           </h2>

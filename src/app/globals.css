@@ -118,3 +118,74 @@
   }
 }
 
+/* Handcraft Theme Custom Styles */
+@layer components {
+  /* Handcraft Table Styling */
+  .handcraft-table .ant-table {
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .handcraft-table .ant-table-thead > tr > th {
+    background: linear-gradient(135deg, #c87941 0%, #ba6f3e 100%);
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px;
+  }
+
+  .handcraft-table .ant-table-tbody > tr {
+    transition: all 0.3s ease;
+  }
+
+  .handcraft-table .ant-table-tbody > tr:hover {
+    background-color: #faf8f3 !important;
+    box-shadow: 0 2px 8px rgba(139, 90, 60, 0.1);
+  }
+
+  .handcraft-table .ant-table-tbody > tr > td {
+    padding: 16px;
+    border-bottom: 1px solid #e8d5c4;
+  }
+
+  .handcraft-table .ant-pagination .ant-pagination-item-active {
+    background: linear-gradient(135deg, #c87941 0%, #ba6f3e 100%);
+    border-color: #c87941;
+  }
+
+  .handcraft-table .ant-pagination .ant-pagination-item-active a {
+    color: white;
+  }
+
+  .handcraft-table .ant-pagination .ant-pagination-item:hover {
+    border-color: #c87941;
+  }
+
+  .handcraft-table .ant-pagination .ant-pagination-item:hover a {
+    color: #c87941;
+  }
+
+  /* Handcraft Select Styling */
+  .handcraft-select .ant-select-selector {
+    border-radius: 12px !important;
+    border: 2px solid #e8d5c4 !important;
+  }
+
+  .handcraft-select.ant-select-focused .ant-select-selector {
+    border-color: #c87941 !important;
+    box-shadow: 0 0 0 2px rgba(200, 121, 65, 0.1) !important;
+  }
+
+  /* Handcraft Modal Styling */
+  .handcraft-modal .ant-modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .handcraft-modal .ant-modal-close {
+    color: white;
+  }
+
+  .handcraft-modal .ant-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
