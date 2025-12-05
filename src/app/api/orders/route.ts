@@ -2,13 +2,15 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { Order, OrderItem, Product, ProductImage, Cart, CartItem } from "@/database/models";
 import logger from "@/utils/logger";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     logger.apiRequest("GET", "/api/orders");
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       logger.authFailed("User Orders Access", "Unauthorized");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

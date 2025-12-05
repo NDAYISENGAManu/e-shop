@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Product, ProductImage, ProductColor } from '@/database/models';
 import { Op } from 'sequelize';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;

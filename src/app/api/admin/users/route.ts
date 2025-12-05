@@ -2,14 +2,16 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { User } from "@/database/models";
 import logger from "@/utils/logger";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import bcrypt from "bcryptjs";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     logger.apiRequest("GET", "/api/admin/users");
     const session = await getServerSession(authOptions);
-    
+
     if (!session || (session.user as any)?.role !== "admin") {
       logger.authFailed("Admin Users Access", "Unauthorized");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -31,7 +33,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session || (session.user as any)?.role !== "admin") {
       logger.authFailed("Create User", "Unauthorized");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

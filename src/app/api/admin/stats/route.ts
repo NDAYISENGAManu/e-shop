@@ -2,14 +2,16 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { Product, User, Order } from "@/database/models";
 import logger from "@/utils/logger";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     logger.apiRequest("GET", "/api/admin/stats");
-    
+
     const session = await getServerSession(authOptions);
-    
+
     if (!session || (session.user as any)?.role !== "admin") {
       logger.authFailed("Admin Stats Access", "Unauthorized - not admin");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

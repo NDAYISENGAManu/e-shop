@@ -3,8 +3,6 @@ import { Sequelize } from 'sequelize';
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/config.js')[env];
 
-let sequelize: Sequelize;
-
 // Enhanced configuration for production
 const optimizedConfig = {
   ...config,
@@ -24,8 +22,21 @@ const optimizedConfig = {
   },
 };
 
+let sequelize: Sequelize;
+
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable]!, optimizedConfig);
+  const dbUrl = process.env[config.use_env_variable];
+  if (!dbUrl) {
+    // During build, use a dummy URL to allow models to initialize
+    // The actual connection won't be used during build
+    sequelize = new Sequelize('postgresql://dummy:dummy@localhost:5432/dummy', {
+      ...optimizedConfig,
+      pool: { max: 0, min: 0 }, // No actual connections during build
+      logging: false,
+    });
+  } else {
+    sequelize = new Sequelize(dbUrl, optimizedConfig);
+  }
 } else {
   sequelize = new Sequelize(
     config.database,

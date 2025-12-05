@@ -2,13 +2,15 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { Product, ProductImage, ProductColor } from "@/database/models";
 import logger from "@/utils/logger";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     logger.apiRequest("GET", "/api/admin/products");
     const session = await getServerSession(authOptions);
-    
+
     if (!session || (session.user as any)?.role !== "admin") {
       logger.authFailed("Admin Products Access", "Unauthorized");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -55,7 +57,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session || (session.user as any)?.role !== "admin") {
       logger.authFailed("Create Product", "Unauthorized");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -63,10 +65,10 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     logger.info("Creating product", { name: body.name });
-    
+
     // Extract images from body if present
     const { images, ...productData } = body;
-    
+
     const product = await Product.create(productData);
     logger.success("Product created", { id: product.id, name: product.name });
 
