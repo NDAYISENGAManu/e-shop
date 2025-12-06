@@ -1,21 +1,17 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import User from './User';
+import { Cart as CartType } from '@/types';
 
-interface CartAttributes {
-  id: number;
-  userId: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface CartCreationAttributes extends Optional<CartType, 'id' | 'items' | 'createdAt' | 'updatedAt'> { }
 
-interface CartCreationAttributes extends Optional<CartAttributes, 'id'> {}
-
-class Cart extends Model<CartAttributes, CartCreationAttributes> implements CartAttributes {
+class Cart extends Model<CartType, CartCreationAttributes> implements CartType {
   public id!: number;
   public userId!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associations
+  public readonly items?: CartType['items'];
 }
 
 Cart.init(
@@ -34,6 +30,14 @@ Cart.init(
         key: 'id',
       },
       onDelete: 'CASCADE',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

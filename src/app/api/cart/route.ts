@@ -70,6 +70,15 @@ export async function POST(request: NextRequest) {
     const userId = (session.user as any).id;
     const { productId, quantity, color } = await request.json();
 
+    // Fetch product to check stock
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      return NextResponse.json(
+        { error: 'Product not found' },
+        { status: 404 }
+      );
+    }
+
     let cart = await Cart.findOne({ where: { userId } });
 
     if (!cart) {
@@ -84,6 +93,16 @@ export async function POST(request: NextRequest) {
         color: color || null,
       },
     });
+
+    const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+    const newTotalQuantity = currentQuantityInCart + quantity;
+
+    if (newTotalQuantity > product.stock) {
+      return NextResponse.json(
+        { error: `Cannot add more items. Only ${product.stock} items in stock.` },
+        { status: 400 }
+      );
+    }
 
     if (existingItem) {
       existingItem.quantity += quantity;

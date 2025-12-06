@@ -1,0 +1,77 @@
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../connection';
+import { Settings as SettingsType } from '@/types';
+
+interface SettingsCreationAttributes extends Optional<SettingsType, 'id' | 'createdAt' | 'updatedAt'> { }
+
+class Settings extends Model<SettingsType, SettingsCreationAttributes> implements SettingsType {
+    public id!: number;
+    public storeName!: string;
+    public email!: string;
+    public phone!: string;
+    public shippingFee!: number;
+    public freeShippingThreshold!: number;
+    public taxRate!: number;
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
+Settings.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        storeName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'E-Shop',
+            field: 'store_name',
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'admin@eshop.com',
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: '+1234567890',
+        },
+        shippingFee: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+            defaultValue: 5.00,
+            field: 'shipping_fee',
+        },
+        freeShippingThreshold: {
+            type: DataTypes.DECIMAL(10, 2),
+            allowNull: false,
+            defaultValue: 50.00,
+            field: 'free_shipping_threshold',
+        },
+        taxRate: {
+            type: DataTypes.DECIMAL(5, 2),
+            allowNull: false,
+            defaultValue: 8.50,
+            field: 'tax_rate',
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            field: 'created_at',
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            field: 'updated_at',
+        },
+    },
+    {
+        sequelize,
+        tableName: 'settings',
+        modelName: 'Settings',
+        underscored: true,
+    }
+);
+
+export default Settings;

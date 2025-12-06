@@ -1,21 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import User from './User';
+import { Order as OrderType } from '@/types';
 
-interface OrderAttributes {
-  id: number;
-  userId: number;
-  total: number;
-  status: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
-  shippingFee: number;
-  paymentIntentId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface OrderCreationAttributes extends Optional<OrderType, 'id' | 'status' | 'paymentIntentId' | 'items' | 'createdAt' | 'updatedAt'> { }
 
-interface OrderCreationAttributes extends Optional<OrderAttributes, 'id' | 'status' | 'paymentIntentId'> {}
-
-class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
+class Order extends Model<OrderType, OrderCreationAttributes> implements OrderType {
   public id!: number;
   public userId!: number;
   public total!: number;
@@ -24,6 +13,9 @@ class Order extends Model<OrderAttributes, OrderCreationAttributes> implements O
   public paymentIntentId?: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associations
+  public readonly items?: OrderType['items'];
 }
 
 Order.init(
@@ -60,6 +52,14 @@ Order.init(
       type: DataTypes.STRING,
       allowNull: true,
       field: 'payment_intent_id',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

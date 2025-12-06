@@ -3,8 +3,30 @@ import { getServerSession } from "next-auth";
 import { Product, ProductImage, ProductColor } from "@/database/models";
 import logger from "@/utils/logger";
 import { authOptions } from "@/lib/auth";
+import { z } from "zod";
 
 export const dynamic = 'force-dynamic';
+
+const createProductSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  price: z.number().min(0, "Price must be positive"),
+  description: z.string().min(1, "Description is required"),
+  category: z.string().min(1, "Category is required"),
+  company: z.string().min(1, "Company is required"),
+  featured: z.boolean().optional(),
+  shipping: z.boolean().optional(),
+  stock: z.number().int().min(0).optional(),
+  images: z.array(z.object({
+    url: z.string().url(),
+    filename: z.string(),
+    isPrimary: z.boolean().optional(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+  })).optional(),
+  colors: z.array(z.object({
+    color: z.string()
+  })).optional()
+});
 
 export async function GET() {
   try {
@@ -41,6 +63,8 @@ export async function GET() {
         'featured',
         'shipping',
         'stock',
+        'createdBy',
+        'updatedBy',
       ],
       order: [["createdAt", "DESC"]],
       subQuery: false,
@@ -64,12 +88,27 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    logger.info("Creating product", { name: body.name });
 
-    // Extract images from body if present
-    const { images, ...productData } = body;
+    // Validate input
+    const validationResult = createProductSchema.safeParse(body);
+    if (!validationResult.success) {
+      logger.warning("Create product validation failed", validationResult.error.errors);
+      return NextResponse.json({ error: "Validation failed", details: validationResult.error.errors }, { status: 400 });
+    }
 
-    const product = await Product.create(productData);
+    const validatedData = validationResult.data;
+    logger.info("Creating product", { name: validatedData.name });
+
+    // Extract images and colors from body if present
+    const { images, colors, ...productData } = validatedData;
+    const userId = parseInt((session.user as any).id);
+
+    const product = await Product.create({
+      ...productData,
+      createdBy: userId,
+      updatedBy: userId,
+    });
+
     logger.success("Product created", { id: product.id, name: product.name });
 
     // Create product images if provided
@@ -80,17 +119,34 @@ export async function POST(request: Request) {
           url: img.url,
           filename: img.filename,
           isPrimary: img.isPrimary,
+          width: img.width || 800,
+          height: img.height || 600,
         }))
       );
       logger.info("Product images created", { productId: product.id, count: images.length });
     }
 
-    // Fetch the complete product with images
+    // Create product colors if provided
+    if (colors && colors.length > 0) {
+      await ProductColor.bulkCreate(
+        colors.map((col: any) => ({
+          productId: product.id,
+          color: col.color,
+        }))
+      );
+      logger.info("Product colors created", { productId: product.id, count: colors.length });
+    }
+
+    // Fetch the complete product with images and colors
     const completeProduct = await Product.findByPk(product.id, {
       include: [
         {
           model: ProductImage,
           as: "images",
+        },
+        {
+          model: ProductColor,
+          as: "colors",
         },
       ],
     });

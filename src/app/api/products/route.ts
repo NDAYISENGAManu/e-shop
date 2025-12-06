@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Product, ProductImage, ProductColor } from '@/database/models';
 import { Op } from 'sequelize';
+import logger from '@/utils/logger';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
+    logger.apiRequest("GET", request.nextUrl.pathname, Object.fromEntries(request.nextUrl.searchParams));
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category');
     const company = searchParams.get('company');
@@ -37,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
 
     let order: any = [['createdAt', 'DESC']];
-    
+
     if (sort === 'price-lowest') {
       order = [['price', 'ASC']];
     } else if (sort === 'price-highest') {
@@ -82,6 +84,8 @@ export async function GET(request: NextRequest) {
       subQuery: false, // Optimize query performance
     });
 
+    logger.success("Public products fetched", { count: products.length, page, limit });
+
     return NextResponse.json({
       products,
       pagination: {
@@ -92,7 +96,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching products:', error);
+    logger.error("Error fetching products:", error);
     return NextResponse.json(
       { error: 'Failed to fetch products' },
       { status: 500 }

@@ -1,13 +1,70 @@
 "use client";
 
-import { Form, Input, Button, InputNumber } from "antd";
+import { Form, Input, Button, InputNumber, message, Spin } from "antd";
 import { SettingOutlined, ShoppingOutlined, DollarOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function AdminSettings() {
   const [form1] = Form.useForm();
   const [form2] = Form.useForm();
   const [form3] = Form.useForm();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const response = await axios.get('/api/settings');
+      const settings = response.data;
+      
+      form1.setFieldsValue({
+        storeName: settings.storeName,
+        email: settings.email,
+        phone: settings.phone,
+      });
+      
+      form2.setFieldsValue({
+        shippingFee: settings.shippingFee,
+        freeShippingThreshold: settings.freeShippingThreshold,
+      });
+      
+      form3.setFieldsValue({
+        taxRate: settings.taxRate,
+      });
+    } catch (error) {
+      console.error('Error fetching settings:', error);
+      message.error('Failed to load settings');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async (values: any) => {
+    setSaving(true);
+    try {
+      await axios.post('/api/settings', values);
+      message.success('Settings updated successfully');
+      // Refresh settings to ensure consistency
+      await fetchSettings();
+    } catch (error) {
+      console.error('Error updating settings:', error);
+      message.error('Failed to update settings');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-96">
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -47,11 +104,16 @@ export default function AdminSettings() {
             Store Information
           </h2>
         </div>
-        <Form form={form1} layout="vertical" className="space-y-4">
+        <Form 
+          form={form1} 
+          layout="vertical" 
+          className="space-y-4"
+          onFinish={handleSave}
+        >
           <Form.Item 
             label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Store Name</span>}
             name="storeName"
-            initialValue="E-Shop"
+            rules={[{ required: true, message: 'Please enter store name' }]}
           >
             <Input 
               size="large" 
@@ -62,7 +124,10 @@ export default function AdminSettings() {
           <Form.Item 
             label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Contact Email</span>}
             name="email"
-            initialValue="admin@eshop.com"
+            rules={[
+              { required: true, message: 'Please enter email' },
+              { type: 'email', message: 'Please enter a valid email' }
+            ]}
           >
             <Input 
               type="email" 
@@ -74,7 +139,7 @@ export default function AdminSettings() {
           <Form.Item 
             label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Phone</span>}
             name="phone"
-            initialValue="+1234567890"
+            rules={[{ required: true, message: 'Please enter phone number' }]}
           >
             <Input 
               type="tel" 
@@ -85,7 +150,9 @@ export default function AdminSettings() {
           </Form.Item>
           <Button 
             type="primary" 
+            htmlType="submit"
             size="large"
+            loading={saving}
             className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-8 !font-bold !shadow-lg hover:!shadow-xl hover:!-translate-y-0.5 !transition-all"
             style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
           >
@@ -109,11 +176,16 @@ export default function AdminSettings() {
               Shipping Settings
             </h2>
           </div>
-          <Form form={form2} layout="vertical" className="space-y-4">
+          <Form 
+            form={form2} 
+            layout="vertical" 
+            className="space-y-4"
+            onFinish={handleSave}
+          >
             <Form.Item 
               label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Standard Shipping Fee ($)</span>}
               name="shippingFee"
-              initialValue={5.00}
+              rules={[{ required: true, message: 'Please enter shipping fee' }]}
             >
               <InputNumber 
                 size="large"
@@ -126,7 +198,7 @@ export default function AdminSettings() {
             <Form.Item 
               label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Free Shipping Threshold ($)</span>}
               name="freeShippingThreshold"
-              initialValue={50.00}
+              rules={[{ required: true, message: 'Please enter threshold' }]}
             >
               <InputNumber 
                 size="large"
@@ -138,7 +210,9 @@ export default function AdminSettings() {
             </Form.Item>
             <Button 
               type="primary" 
+              htmlType="submit"
               size="large"
+              loading={saving}
               className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-8 !font-bold !shadow-lg hover:!shadow-xl hover:!-translate-y-0.5 !transition-all"
               style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
             >
@@ -160,11 +234,16 @@ export default function AdminSettings() {
               Tax Settings
             </h2>
           </div>
-          <Form form={form3} layout="vertical" className="space-y-4">
+          <Form 
+            form={form3} 
+            layout="vertical" 
+            className="space-y-4"
+            onFinish={handleSave}
+          >
             <Form.Item 
               label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Tax Rate (%)</span>}
               name="taxRate"
-              initialValue={8.50}
+              rules={[{ required: true, message: 'Please enter tax rate' }]}
             >
               <InputNumber 
                 size="large"
@@ -177,7 +256,9 @@ export default function AdminSettings() {
             </Form.Item>
             <Button 
               type="primary" 
+              htmlType="submit"
               size="large"
+              loading={saving}
               className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-8 !font-bold !shadow-lg hover:!shadow-xl hover:!-translate-y-0.5 !transition-all"
               style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
             >

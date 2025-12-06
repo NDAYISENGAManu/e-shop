@@ -1,22 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import Product from './Product';
+import { ProductImage as ProductImageType } from '@/types';
 
-interface ProductImageAttributes {
-  id: number;
-  productId: number;
-  url: string;
-  filename: string;
-  width: number;
-  height: number;
-  isPrimary: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface ProductImageCreationAttributes extends Optional<ProductImageType, 'id' | 'isPrimary' | 'createdAt' | 'updatedAt'> { }
 
-interface ProductImageCreationAttributes extends Optional<ProductImageAttributes, 'id' | 'isPrimary'> {}
-
-class ProductImage extends Model<ProductImageAttributes, ProductImageCreationAttributes> implements ProductImageAttributes {
+class ProductImage extends Model<ProductImageType, ProductImageCreationAttributes> implements ProductImageType {
   public id!: number;
   public productId!: number;
   public url!: string;
@@ -65,6 +53,14 @@ ProductImage.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
       field: 'is_primary',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

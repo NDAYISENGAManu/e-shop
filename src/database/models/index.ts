@@ -6,6 +6,7 @@ import Cart from './Cart';
 import CartItem from './CartItem';
 import Order from './Order';
 import OrderItem from './OrderItem';
+import Settings from './Settings';
 
 // User associations
 User.hasOne(Cart, { foreignKey: 'userId', as: 'cart' });
@@ -48,6 +49,7 @@ const models = {
   CartItem,
   Order,
   OrderItem,
+  Settings,
 };
 
 export default models;
@@ -60,4 +62,5 @@ export {
   CartItem,
   Order,
   OrderItem,
+  Settings,
 };

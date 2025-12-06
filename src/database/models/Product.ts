@@ -1,25 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
+import { Product as ProductType } from '@/types';
 
-interface ProductAttributes {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-  company: string;
-  featured: boolean;
-  shipping: boolean;
-  stock: number;
-  stars: number;
-  reviews: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface ProductCreationAttributes extends Optional<ProductType, 'id' | 'featured' | 'shipping' | 'stock' | 'stars' | 'reviews' | 'images' | 'colors' | 'createdAt' | 'updatedAt'> { }
 
-interface ProductCreationAttributes extends Optional<ProductAttributes, 'id' | 'featured' | 'shipping' | 'stock' | 'stars' | 'reviews'> {}
-
-class Product extends Model<ProductAttributes, ProductCreationAttributes> implements ProductAttributes {
+class Product extends Model<ProductType, ProductCreationAttributes> implements ProductType {
   public id!: number;
   public name!: string;
   public price!: number;
@@ -31,8 +16,14 @@ class Product extends Model<ProductAttributes, ProductCreationAttributes> implem
   public stock!: number;
   public stars!: number;
   public reviews!: number;
+  public createdBy?: number;
+  public updatedBy?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associations
+  public readonly images?: ProductType['images'];
+  public readonly colors?: ProductType['colors'];
 }
 
 Product.init(
@@ -81,6 +72,24 @@ Product.init(
     reviews: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'created_by',
+    },
+    updatedBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'updated_by',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

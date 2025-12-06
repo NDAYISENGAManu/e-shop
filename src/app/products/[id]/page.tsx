@@ -5,7 +5,7 @@ import { Button } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Product } from "@/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/components/Notification";
@@ -26,6 +26,43 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       return response.data;
     },
   });
+  const { data: cart } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => {
+      if (!session) return null;
+      const response = await axios.get("/api/cart");
+      return response.data;
+    },
+    enabled: !!session,
+  });
+
+  useEffect(() => {
+    if (product && cart && session) {
+      const cartItem = cart.items?.find((item: any) => item.productId === parseInt(params.id));
+      const currentCartQuantity = cartItem ? cartItem.quantity : 0;
+
+      if (currentCartQuantity > 0 && currentCartQuantity >= product.stock) {
+        showWarning(`You have all available stock (${product.stock}) in your cart.`);
+        router.push("/cart");
+      }
+    }
+  }, [product, cart, params.id, router, showWarning, session]);
+
+  const handleIncrement = () => {
+    const cartItem = cart?.items?.find((item: any) => item.productId === parseInt(params.id));
+    const currentCartQuantity = cartItem ? cartItem.quantity : 0;
+    const availableStock = product.stock - currentCartQuantity;
+
+    if (quantity >= availableStock) {
+      const message = currentCartQuantity > 0
+        ? `Cannot add more. You have ${currentCartQuantity} in cart and only ${product.stock} in stock.`
+        : `Cannot add more. You have selected all available items (${product.stock} in stock).`;
+      showError(message);
+      return;
+    }
+    setQuantity(quantity + 1);
+  };
+
   const handleAddToCart = async () => {
     if (!session) {
       const currentPath = window.location.pathname;
@@ -42,8 +79,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       showSuccess("Product added to cart!");
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       setQuantity(1);
-    } catch (error) {
-      showError("Failed to add product to cart");
+    } catch (error: any) {
+      showError(error.response?.data?.error || "Failed to add product to cart");
     }
   };
 
@@ -108,9 +145,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
-                onClick={() =>
-                  setQuantity(Math.min(product.stock, quantity + 1))
-                }
+                onClick={handleIncrement}
               />
             </div>
           </div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas32" width="32" height="32"></canvas>
+    <canvas id="canvas192" width="192" height="192"></canvas>
+    <canvas id="canvas512" width="512" height="512"></canvas>
+    <canvas id="canvas180" width="180" height="180"></canvas>
+    <script>
+        function drawHeart(ctx, size) {
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#c87941');
+            gradient.addColorStop(1, '#6b7f4a');
+            
+            // Draw circle background
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw heart
+            const scale = size / 32;
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2 * scale;
+            
+            // Heart path (outline style)
+            ctx.beginPath();
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const heartSize = size * 0.5;
+            
+            // Starting point (bottom of heart)
+            ctx.moveTo(centerX, centerY + heartSize * 0.3);
+            
+            // Left curve
+            ctx.bezierCurveTo(
+                centerX - heartSize * 0.5, centerY + heartSize * 0.1,
+                centerX - heartSize * 0.5, centerY - heartSize * 0.3,
+                centerX, centerY - heartSize * 0.1
+            );
+            
+            // Right curve
+            ctx.bezierCurveTo(
+                centerX + heartSize * 0.5, centerY - heartSize * 0.3,
+                centerX + heartSize * 0.5, centerY + heartSize * 0.1,
+                centerX, centerY + heartSize * 0.3
+            );
+            
+            ctx.stroke();
+        }
+        
+        // Draw all sizes
+        const canvas32 = document.getElementById('canvas32');
+        const ctx32 = canvas32.getContext('2d');
+        drawHeart(ctx32, 32);
+        
+        const canvas192 = document.getElementById('canvas192');
+        const ctx192 = canvas192.getContext('2d');
+        drawHeart(ctx192, 192);
+        
+        const canvas512 = document.getElementById('canvas512');
+        const ctx512 = canvas512.getContext('2d');
+        drawHeart(ctx512, 512);
+        
+        const canvas180 = document.getElementById('canvas180');
+        const ctx180 = canvas180.getContext('2d');
+        drawHeart(ctx180, 180);
+        
+        console.log('Favicons generated! Right-click each canvas to save:');
+        console.log('32x32 -> favicon.ico');
+        console.log('192x192 -> logo192.png');
+        console.log('512x512 -> logo512.png and icon.png');
+        console.log('180x180 -> apple-icon.png');
+    </script>
+</body>
+</html>

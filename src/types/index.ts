@@ -22,6 +22,8 @@ export interface Product {
   reviews: number;
   images?: ProductImage[];
   colors?: ProductColor[];
+  createdBy?: number;
+  updatedBy?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -85,6 +87,18 @@ export interface OrderItem {
   color: string;
   price: number;
   product?: Product;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Settings {
+  id: number;
+  storeName: string;
+  email: string;
+  phone: string;
+  shippingFee: number;
+  freeShippingThreshold: number;
+  taxRate: number;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -125,7 +125,7 @@ export default function Footer() {
             <p className="flex items-center gap-2" style={{ fontFamily: "'Quicksand', sans-serif" }}>
               Crafted with 
               <HeartOutlined className="text-[#c87941] animate-pulse" /> 
-              by artisans
+              by Manu Handcraft
             </p>
           </div>
         </div>

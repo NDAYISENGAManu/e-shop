@@ -1,24 +1,18 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
+import { User as UserType } from '@/types';
 
-interface UserAttributes {
-  id: number;
-  email: string;
+interface UserAttributes extends UserType {
   password: string;
-  firstName: string;
-  lastName: string;
-  role: 'user' | 'admin';
   mustChangePassword?: boolean;
   securityQuestion1?: string;
   securityAnswer1?: string;
   securityQuestion2?: string;
   securityAnswer2?: string;
   dateOfBirth?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'role'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'role' | 'createdAt' | 'updatedAt'> { }
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
@@ -101,6 +95,14 @@ User.init(
       type: DataTypes.DATEONLY,
       allowNull: true,
       field: 'date_of_birth',
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

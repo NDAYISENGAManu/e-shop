@@ -1,18 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import Product from './Product';
+import { ProductColor as ProductColorType } from '@/types';
 
-interface ProductColorAttributes {
-  id: number;
-  productId: number;
-  color: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface ProductColorCreationAttributes extends Optional<ProductColorType, 'id' | 'createdAt' | 'updatedAt'> { }
 
-interface ProductColorCreationAttributes extends Optional<ProductColorAttributes, 'id'> {}
-
-class ProductColor extends Model<ProductColorAttributes, ProductColorCreationAttributes> implements ProductColorAttributes {
+class ProductColor extends Model<ProductColorType, ProductColorCreationAttributes> implements ProductColorType {
   public id!: number;
   public productId!: number;
   public color!: string;
@@ -40,6 +32,14 @@ ProductColor.init(
     color: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

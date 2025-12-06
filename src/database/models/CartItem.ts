@@ -1,28 +1,20 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import Cart from './Cart';
-import Product from './Product';
+import { CartItem as CartItemType } from '@/types';
 
-interface CartItemAttributes {
-  id: number;
-  cartId: number;
-  productId: number;
-  quantity: number;
-  color: string | null;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface CartItemCreationAttributes extends Optional<CartItemType, 'id' | 'color' | 'product' | 'createdAt' | 'updatedAt'> { }
 
-interface CartItemCreationAttributes extends Optional<CartItemAttributes, 'id' | 'color'> {}
-
-class CartItem extends Model<CartItemAttributes, CartItemCreationAttributes> implements CartItemAttributes {
+class CartItem extends Model<CartItemType, CartItemCreationAttributes> implements CartItemType {
   public id!: number;
   public cartId!: number;
   public productId!: number;
   public quantity!: number;
-  public color!: string | null;
+  public color!: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associations
+  public readonly product?: CartItemType['product'];
 }
 
 CartItem.init(
@@ -60,6 +52,14 @@ CartItem.init(
     color: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

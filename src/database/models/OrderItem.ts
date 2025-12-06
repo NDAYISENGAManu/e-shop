@@ -1,22 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../connection';
-import Order from './Order';
-import Product from './Product';
+import { OrderItem as OrderItemType } from '@/types';
 
-interface OrderItemAttributes {
-  id: number;
-  orderId: number;
-  productId: number;
-  quantity: number;
-  color: string;
-  price: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+interface OrderItemCreationAttributes extends Optional<OrderItemType, 'id' | 'product' | 'createdAt' | 'updatedAt'> { }
 
-interface OrderItemCreationAttributes extends Optional<OrderItemAttributes, 'id'> {}
-
-class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes> implements OrderItemAttributes {
+class OrderItem extends Model<OrderItemType, OrderItemCreationAttributes> implements OrderItemType {
   public id!: number;
   public orderId!: number;
   public productId!: number;
@@ -25,6 +13,9 @@ class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes> 
   public price!: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  // Associations
+  public readonly product?: OrderItemType['product'];
 }
 
 OrderItem.init(
@@ -65,6 +56,14 @@ OrderItem.init(
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at',
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at',
     },
   },
   {

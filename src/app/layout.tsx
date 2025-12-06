@@ -7,8 +7,13 @@ import ConditionalLayout from "@/components/ConditionalLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "E-Shop - Quality Furniture Store",
-  description: "Shop the best furniture for your home",
+  title: "E-Shop - Manu store",
+  description: "Shop the best handmade for your home",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+  },
 };
 
 export default function RootLayout({
