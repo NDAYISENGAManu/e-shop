@@ -44,7 +44,7 @@ export default function SearchModal() {
         width={700}
         centered
         className="search-modal"
-        styles={{ body: { padding: 0 } }}
+        bodyStyle={{ padding: 0 }}
       >
         <div className="bg-gradient-to-br from-[#8b6f47] to-[#d4a574] text-white p-6 m-0">
           <h2 className="font-serif text-2xl m-0">

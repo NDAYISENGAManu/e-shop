@@ -68,7 +68,7 @@ export default function ChangePasswordModal({
       width={500}
     >
       <div className="py-4">
-        <Text className="block mb-6 text-[var(--clr-grey-5)] leading-relaxed">
+        <Text className="block mb-6 text-(--clr-grey-5) leading-relaxed">
           For security reasons, please change your password before continuing.
           You can skip this step, but we strongly recommend changing your
           password.

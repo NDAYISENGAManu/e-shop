@@ -12,7 +12,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] relative overflow-hidden">
+    <section className="py-24 bg-linear-to-br from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
@@ -71,14 +71,14 @@ export default function Contact() {
                   message: "Please enter a valid email",
                 },
               ]}
-              className="flex-1 !mb-0"
+              className="flex-1 mb-0!"
             >
               <Input
                 type="email"
                 placeholder="Enter your email address"
                 size="large"
                 prefix={<MailOutlined className="text-[#7a5838]" />}
-                className="!rounded-full !px-6 !py-3 !text-base border-2 !border-[#e8d5c4] focus:!border-[#c87941] hover:!border-[#c87941]"
+                className="rounded-full! px-6! py-3! text-base! border-2 border-[#e8d5c4]! focus:border-[#c87941]! hover:border-[#c87941]!"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               />
             </Form.Item>

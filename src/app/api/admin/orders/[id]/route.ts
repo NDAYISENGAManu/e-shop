@@ -8,9 +8,10 @@ export const dynamic = 'force-dynamic';
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session || (session.user as any)?.role !== "admin") {
@@ -19,15 +20,15 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const order = await Order.findByPk(params.id);
+    const order = await Order.findByPk(id);
 
     if (!order) {
-      logger.warning("Order not found", { id: params.id });
+      logger.warning("Order not found", { id });
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
     await order.update({ status: body.status });
-    logger.success("Order status updated", { id: params.id, status: body.status });
+    logger.success("Order status updated", { id, status: body.status });
 
     return NextResponse.json(order);
   } catch (error) {

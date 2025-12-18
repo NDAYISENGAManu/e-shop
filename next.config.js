@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    serverComponentsExternalPackages: ['sequelize', 'sequelize-typescript'],
-  },
+  serverExternalPackages: ['sequelize', 'sequelize-typescript'],
   images: {
     remotePatterns: [
       {
@@ -15,16 +13,7 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals.push({
-        'pg': 'commonjs pg',
-        'pg-hstore': 'commonjs pg-hstore',
-        'sequelize': 'commonjs sequelize',
-      });
-    }
-    return config;
-  },
+  turbopack: {},
 }
 
 module.exports = nextConfig

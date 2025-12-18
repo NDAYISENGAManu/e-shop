@@ -30,9 +30,10 @@ const updateProductSchema = z.object({
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session || (session.user as any)?.role !== "admin") {
@@ -52,10 +53,10 @@ export async function PUT(
     const validatedData = validationResult.data;
     const { images, colors, ...productData } = validatedData;
 
-    const product = await Product.findByPk(params.id);
+    const product = await Product.findByPk(id);
 
     if (!product) {
-      logger.warning("Product not found", { id: params.id });
+      logger.warning("Product not found", { id });
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
@@ -65,7 +66,7 @@ export async function PUT(
       ...productData,
       updatedBy: userId
     });
-    logger.success("Product updated", { id: params.id, name: product.name });
+    logger.success("Product updated", { id, name: product.name });
 
     // Handle images if provided
     if (images) {
@@ -128,9 +129,10 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session || (session.user as any)?.role !== "admin") {
@@ -138,10 +140,10 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const product = await Product.findByPk(params.id);
+    const product = await Product.findByPk(id);
 
     if (!product) {
-      logger.warning("Product not found for deletion", { id: params.id });
+      logger.warning("Product not found for deletion", { id });
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
 
@@ -150,7 +152,7 @@ export async function DELETE(
     await ProductColor.destroy({ where: { productId: product.id } });
 
     await product.destroy();
-    logger.success("Product deleted", { id: params.id });
+    logger.success("Product deleted", { id });
 
     return NextResponse.json({ message: "Product deleted" });
   } catch (error) {

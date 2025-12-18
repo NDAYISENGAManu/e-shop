@@ -40,7 +40,7 @@ export default function ConfirmModal({
       centered
       maskClosable={false}
     >
-      <p className="text-[var(--clr-grey-3)] leading-relaxed py-4">{message}</p>
+      <p className="text-(--clr-grey-3) leading-relaxed py-4">{message}</p>
     </Modal>
   );
 }
