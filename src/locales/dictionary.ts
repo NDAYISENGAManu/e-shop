@@ -58,7 +58,8 @@ export const translations = {
             title: "Design Your Comfort Zone",
             subtitle: "Experience luxury and craftsmanship in every piece. Our handmade furniture brings warmth and style to your home.",
             shopNow: "Shop Now",
-            madeCare: "Made with Love & Care",
+            ourStory: "Our Story",
+            badge: "Made with Love & Care",
             passionate: "Made by passionate artisans",
             handmade: "100% Handmade",
             noMass: "No mass production",
@@ -68,6 +69,7 @@ export const translations = {
         },
         services: {
             title: "Why Choose",
+            brand: "Handcraft",
             subtitle: "Experience the difference that authentic craftsmanship makes",
             handmadeTitle: "Handmade With Love",
             handmadeText: "Every piece is crafted by skilled artisans who pour their passion and expertise into creating unique treasures.",
@@ -138,6 +140,17 @@ export const translations = {
             resetSubtitle: "Enter your email to receive a reset link",
             sendLink: "Send Reset Link",
             backToLogin: "Back to Login",
+        },
+        newsletter: {
+            accent: "get exclusive handcraft treasures",
+            title: "Subscribe to discover new artisans, get special offers, and receive 20% off your first handcrafted piece",
+            placeholder: "Enter your email address",
+            button: "Subscribe",
+            noSpam: "No spam, ever",
+            unsubscribe: "Unsubscribe anytime",
+            stories: "Exclusive artisan stories",
+            success: "Thank you for subscribing!",
+            invalidEmail: "Please enter a valid email",
         }
     },
     rw: {
@@ -198,7 +211,8 @@ export const translations = {
             title: "Ubwiza n'Ubuhanga mu rugo rwawe",
             subtitle: "Iyumvire amateka n'ubushabo muri buri gikoresho. Ibikoresho byacu by'intoki bizana ubushyuhe n'uburyo bwiza mu nzu yawe.",
             shopNow: "Gura None",
-            madeCare: "Byakozwe n'Urukundo n'Ubushishozi",
+            ourStory: "Amateka yacu",
+            badge: "Byakozwe n'Urukundo n'Ubushishozi",
             passionate: "Bikozwe n'abanyabugeni babishaka",
             handmade: "100% By'intoki",
             noMass: "Ntabwo ari iby'inganda nini",
@@ -208,6 +222,7 @@ export const translations = {
         },
         services: {
             title: "Kuki wahitamo",
+            brand: "Ubuhanga",
             subtitle: "Iyumvire itandukaniro ry'ubuhanga nyabwo",
             handmadeTitle: "Byakozwe n'Urukundo",
             handmadeText: "Buri gikoresho gikorwa n'abanyabugeni b'abahanga bashyira imbaraga n'ubumenyi bwabo mu guhanga ibintu bidasanzwe.",
@@ -278,6 +293,17 @@ export const translations = {
             resetSubtitle: "Shyiramo imeli yawe kugira ngo ubone aho guhindurira",
             sendLink: "Ohereza aho guhindurira",
             backToLogin: "Subira ahabanza",
+        },
+        newsletter: {
+            accent: "bona ibihimbano byihariye",
+            title: "Iyandikishe kugira ngo umenye abanyabugeni bashya, ubone ibiciro bidasanzwe, kandi ugabanyirizwe 20% ku gikoresho cyawe cya mbere",
+            placeholder: "Andika imeli yawe hano",
+            button: "Iyandikishe",
+            noSpam: "Nta butumwa bwinshi, rwose",
+            unsubscribe: "Ushobora guhagarika igihe cyose",
+            stories: "Amateka y'abanyabugeni",
+            success: "Murakoze kwiyandikisha!",
+            invalidEmail: "Andika imeli yukuri",
         }
     }
 };

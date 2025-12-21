@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { NotificationProvider } from "./Notification";
 import { LanguageProvider } from "@/context/LanguageContext";
+import NotificationHandler from "./NotificationHandler";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -28,7 +29,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
-          <NotificationProvider>{children}</NotificationProvider>
+          <NotificationProvider>
+            <NotificationHandler />
+            {children}
+          </NotificationProvider>
         </LanguageProvider>
       </QueryClientProvider>
     </SessionProvider>

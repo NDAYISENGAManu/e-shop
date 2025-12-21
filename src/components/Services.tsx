@@ -48,7 +48,7 @@ export default function Services() {
             className="text-5xl font-bold mb-4 text-[#2d2416]"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            {t.services.title} <span className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] bg-clip-text text-transparent">Handcraft</span>
+            {t.services.title} <span className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] bg-clip-text text-transparent">{t.services.brand}</span>
           </h2>
           <p 
             className="text-lg text-[#5a4a3a] max-w-[600px] mx-auto"

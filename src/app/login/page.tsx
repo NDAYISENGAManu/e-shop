@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useLanguage } from "@/context/LanguageContext";
+import { useNotification } from "@/components/Notification";
 
 const { Title, Text } = Typography;
 
@@ -16,9 +17,9 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { showError } = useNotification();
   const redirectUrl = searchParams?.get("redirect") || "/";
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Redirect if already logged in
@@ -29,7 +30,6 @@ function LoginForm() {
   }, [status, router, redirectUrl]);
 
   const handleSubmit = async (values: { email: string; password: string }) => {
-    setError("");
     setLoading(true);
 
     try {
@@ -40,12 +40,12 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setError(result.error);
+        showError(result.error);
       } else {
         router.push(redirectUrl);
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      showError(language === 'en' ? "An error occurred. Please try again." : "Habaye ikibazo. Ongera ugerageze.");
     } finally {
       setLoading(false);
     }
@@ -84,7 +84,7 @@ function LoginForm() {
               {
                 required: true,
                 type: "email",
-                message: "Please enter a valid email",
+                message: language === 'en' ? "Please enter a valid email" : "Andika imeli yukuri",
               },
             ]}
           >
@@ -93,7 +93,7 @@ function LoginForm() {
 
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please enter your password" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please enter your password" : "Andika ijambo ry'ibanga" }]}
           >
             <PasswordInput placeholder={t.auth.password} />
           </Form.Item>
@@ -106,12 +106,6 @@ function LoginForm() {
               {t.auth.forgotPassword}
             </Link>
           </div>
-
-          {error && (
-            <Text type="danger" className="block text-center">
-              {error}
-            </Text>
-          )}
 
           <Button
             type="submit"

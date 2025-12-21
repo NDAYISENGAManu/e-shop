@@ -40,7 +40,7 @@ export default function Hero() {
               className="text-[#7a5838] font-bold tracking-[3px] uppercase text-sm"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              ✨ Made with Love & Care
+              ✨ {t.hero.badge}
             </span>
           </div>
 
@@ -62,7 +62,7 @@ export default function Hero() {
             className="text-4xl text-[#c87941] opacity-80 -rotate-2 inline-block"
             style={{ fontFamily: "'Dancing Script', cursive" }}
           >
-            {language === 'en' ? 'Made by passionate artisans' : 'Bikozwe n\'abanyabugeni babishaka'}
+            {t.hero.passionate}
           </div>
 
           {/* Description */}
@@ -96,7 +96,7 @@ export default function Hero() {
                 className="!px-10 !py-7 !h-auto !text-lg !font-bold !transition-all hover:!-translate-y-1 hover:!shadow-lg"
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
-                {language === 'en' ? 'Our Story' : 'Amateka yacu'}
+                {t.hero.ourStory}
               </Button>
             </Link>
           </div>
@@ -108,8 +108,8 @@ export default function Hero() {
                 ✓
               </div>
               <div>
-                <div className="font-bold text-[#2d2416]" style={{ fontFamily: "'Quicksand', sans-serif" }}>100% Handmade</div>
-                <div className="text-sm text-[#7a5838]">No mass production</div>
+                <div className="font-bold text-[#2d2416]" style={{ fontFamily: "'Quicksand', sans-serif" }}>{t.hero.handmade}</div>
+                <div className="text-sm text-[#7a5838]">{t.hero.noMass}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -117,8 +117,8 @@ export default function Hero() {
                 ♥
               </div>
               <div>
-                <div className="font-bold text-[#2d2416]" style={{ fontFamily: "'Quicksand', sans-serif" }}>Eco-Friendly</div>
-                <div className="text-sm text-[#7a5838]">Sustainable materials</div>
+                <div className="font-bold text-[#2d2416]" style={{ fontFamily: "'Quicksand', sans-serif" }}>{t.hero.eco}</div>
+                <div className="text-sm text-[#7a5838]">{t.hero.sustainable}</div>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function Hero() {
                 15+
               </div>
               <div className="text-sm font-semibold text-[#7a5838]" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-                Unique Items
+                {t.hero.unique}
               </div>
             </div>
 

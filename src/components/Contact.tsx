@@ -2,12 +2,17 @@
 
 import { Input, Button, Form } from "antd";
 import { MailOutlined, GiftOutlined } from "@ant-design/icons";
+import { useLanguage } from "@/context/LanguageContext";
+import { useNotification } from "./Notification";
 
 export default function Contact() {
   const [form] = Form.useForm();
+  const { t } = useLanguage();
+  const { showSuccess } = useNotification();
 
   const handleSubmit = (values: { email: string }) => {
     console.log("Email:", values.email);
+    showSuccess(t.newsletter.success);
     form.resetFields();
   };
 
@@ -36,14 +41,14 @@ export default function Contact() {
           className="text-3xl text-white/90 mb-6 -rotate-1"
           style={{ fontFamily: "'Dancing Script', cursive" }}
         >
-         get exclusive handcraft treasures
+         {t.newsletter.accent}
         </div>
 
         <p 
           className="text-xl text-white/90 mb-10 max-w-[600px] mx-auto leading-relaxed"
           style={{ fontFamily: "'Quicksand', sans-serif" }}
         >
-          Subscribe to discover new artisans, get special offers, and receive <strong>20% off</strong> your first handcrafted piece
+          {t.newsletter.title}
         </p>
 
         {/* Newsletter Form */}
@@ -60,14 +65,14 @@ export default function Contact() {
                 {
                   required: true,
                   type: "email",
-                  message: "Please enter a valid email",
+                  message: t.newsletter.invalidEmail,
                 },
               ]}
               className="flex mb-0!"
             >
               <Input
                 type="email"
-                placeholder="Enter your email address"
+                placeholder={t.newsletter.placeholder}
                 size="large"
                 prefix={<MailOutlined className="text-[#7a5838]" />}
                 className="rounded-full! px-6! py-3! text-base! border-2 border-[#e8d5c4]! focus:border-[#c87941]! hover:border-[#c87941]!"
@@ -82,7 +87,7 @@ export default function Contact() {
                 className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] hover:!from-[#ba6f3e] hover:!to-[#c87941] !border-none !rounded-full !px-10 !py-3 !h-auto !text-base !font-bold uppercase tracking-wider shadow-lg hover:shadow-xl hover:!-translate-y-0.5 !transition-all"
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
-                Subscribe
+                {t.newsletter.button}
               </Button>
             </Form.Item>
           </Form>
@@ -97,7 +102,7 @@ export default function Contact() {
                 className="text-sm font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                No spam, ever
+                {t.newsletter.noSpam}
               </span>
             </div>
             <div className="flex items-center gap-2 text-[#7a5838]">
@@ -108,7 +113,7 @@ export default function Contact() {
                 className="text-sm font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Unsubscribe anytime
+                {t.newsletter.unsubscribe}
               </span>
             </div>
             <div className="flex items-center gap-2 text-[#7a5838]">
@@ -119,29 +124,11 @@ export default function Contact() {
                 className="text-sm font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Exclusive artisan stories
+                {t.newsletter.stories}
               </span>
             </div>
           </div>
         </div>
-
-        {/* Social proof */}
-        {/* <div className="mt-8 flex items-center justify-center gap-3 text-white/90">
-          <div className="flex -space-x-3">
-            <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg"></div>
-            <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg"></div>
-            <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg"></div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c87941] to-[#ba6f3e] border-2 border-white shadow-lg flex items-center justify-center text-white text-xs font-bold">
-              +5K
-            </div>
-          </div>
-          <p 
-            className="font-semibold"
-            style={{ fontFamily: "'Quicksand', sans-serif" }}
-          >
-            Join 5,000+ happy subscribers
-          </p>
-        </div> */}
       </div>
     </section>
   );
