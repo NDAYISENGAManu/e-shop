@@ -1,48 +1,25 @@
-# E-Shop - Modern Next.js E-Commerce Platform
+# E-Shop - Modern Next.js Platform
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-336791)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-A full-stack e-commerce application built with Next.js 14, TypeScript, and PostgreSQL.
+A full-stack application built with Next.js 16, TypeScript, and PostgreSQL.
 
 </div>
 
 ---
 
-## ⚡ Quick Start
-
-```bash
-# Automated setup
-./setup.sh
-
-# Start development
-npm run dev
-```
-
 Visit: http://localhost:3000
 
 **Default Login:** admin@eshop.com / Admin@123
 
-## 📚 Full Documentation
-
-This project has been completely migrated to Next.js 14 with TypeScript and PostgreSQL.
-
-- [**📖 Complete Documentation**](README-NEW.md) - Full setup and usage guide
-- [**🔄 Migration Guide**](MIGRATION.md) - Upgrade instructions
-- [**🚀 Deployment Guide**](DEPLOYMENT.md) - Production deployment
-- [**⚡ Quick Reference**](QUICK-REFERENCE.md) - Common commands
-- [**📊 Project Summary**](PROJECT-SUMMARY.md) - Overview & features
-- [**⚡ Performance Guide**](PERFORMANCE.md) - **NEW!** Optimization details
-- [**🏭 Production Guide**](PRODUCTION.md) - **NEW!** Deployment checklist
-- [**📈 Optimization Summary**](OPTIMIZATION-SUMMARY.md) - **NEW!** Performance improvements
-
 ## 🌟 Features
 
-✅ Next.js 14 with App Router
+✅ Next.js 16 with App Router
 ✅ TypeScript for type safety
 ✅ PostgreSQL + Sequelize ORM
 ✅ NextAuth.js authentication
@@ -57,7 +34,7 @@ This project has been completely migrated to Next.js 14 with TypeScript and Post
 
 ## 🛠️ Tech Stack
 
-**Frontend:** Next.js 14, TypeScript, Styled Components, React Query
+**Frontend:** Next.js 16, TypeScript, TailwindCss, React Query
 **Backend:** Next.js API Routes, PostgreSQL, Sequelize
 **Auth:** NextAuth.js with bcryptjs
 
@@ -65,7 +42,7 @@ This project has been completely migrated to Next.js 14 with TypeScript and Post
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 14+
+- PostgreSQL 16+
 
 ### Setup
 
