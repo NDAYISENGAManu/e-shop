@@ -5,25 +5,25 @@ import { Product as ProductType } from '@/types';
 interface ProductCreationAttributes extends Optional<ProductType, 'id' | 'featured' | 'shipping' | 'stock' | 'stars' | 'reviews' | 'images' | 'colors' | 'createdAt' | 'updatedAt'> { }
 
 class Product extends Model<ProductType, ProductCreationAttributes> implements ProductType {
-  public id!: number;
-  public name!: string;
-  public price!: number;
-  public description!: string;
-  public category!: string;
-  public company!: string;
-  public featured!: boolean;
-  public shipping!: boolean;
-  public stock!: number;
-  public stars!: number;
-  public reviews!: number;
-  public createdBy?: number;
-  public updatedBy?: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare public id: number;
+  declare public name: string;
+  declare public price: number;
+  declare public description: string;
+  declare public category: string;
+  declare public company: string;
+  declare public featured: boolean;
+  declare public shipping: boolean;
+  declare public stock: number;
+  declare public stars: number;
+  declare public reviews: number;
+  declare public createdBy?: number;
+  declare public updatedBy?: number;
+  declare public readonly createdAt: Date;
+  declare public readonly updatedAt: Date;
 
   // Associations
-  public readonly images?: ProductType['images'];
-  public readonly colors?: ProductType['colors'];
+  declare public readonly images?: ProductType['images'];
+  declare public readonly colors?: ProductType['colors'];
 }
 
 Product.init(

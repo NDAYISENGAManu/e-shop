@@ -148,7 +148,7 @@ export default function Hero() {
             {/* Floating badge */}
             <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl border-2 border-[#e8d5c4] animate-[float_6s_ease-in-out_infinite]">
               <div className="text-4xl font-bold bg-gradient-to-r from-[#c87941] to-[#ba6f3e] bg-clip-text text-transparent" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                500+
+                15+
               </div>
               <div className="text-sm font-semibold text-[#7a5838]" style={{ fontFamily: "'Quicksand', sans-serif" }}>
                 Unique Items

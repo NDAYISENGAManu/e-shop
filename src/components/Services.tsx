@@ -99,29 +99,6 @@ export default function Services() {
             </div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p 
-            className="text-xl text-[#5a4a3a] mb-6"
-            style={{ fontFamily: "'Dancing Script', cursive" }}
-          >
-            Join thousands of happy customers who chose handmade
-          </p>
-          <div className="flex items-center justify-center gap-2 text-[#7a5838]">
-            <div className="flex -space-x-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c87941] to-[#ba6f3e] border-2 border-white"></div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6b7f4a] to-[#5a6d3d] border-2 border-white"></div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#c87941] to-[#ba6f3e] border-2 border-white"></div>
-            </div>
-            <span 
-              className="font-semibold"
-              style={{ fontFamily: "'Quicksand', sans-serif" }}
-            >
-              5,000+ Happy Customers
-            </span>
-          </div>
-        </div>
       </div>
     </section>
   );

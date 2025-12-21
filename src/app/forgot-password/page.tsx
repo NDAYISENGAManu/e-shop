@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Form, Input, Button, Steps, Typography } from "antd";
+import { Form, Input, Button, Typography } from "antd";
 import Link from "next/link";
 import axios from "axios";
 import { useNotification } from "@/components/Notification";
@@ -92,14 +92,39 @@ export default function ForgotPasswordPage() {
           Reset Password
         </Title>
 
-        <Steps
-          current={step}
-          className="mb-8"
-          items={[
-            { title: "Verify Email" },
-            { title: "Reset Password" },
-          ]}
-        />
+        {/* Custom Handcraft Stepper */}
+        <div className="relative flex justify-between items-center w-full max-w-[300px] mx-auto my-10">
+          {/* Connecting Line */}
+          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#e8d5c4] -z-10"></div>
+          
+          {/* Step 1 */}
+          <div className="flex flex-col items-center gap-2 bg-white px-2">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-300 ${
+              step >= 0 
+                ? "bg-gradient-to-br from-[#c87941] to-[#ba6f3e] text-white shadow-[0_4px_12px_rgba(200,121,65,0.3)] scale-110" 
+                : "bg-white border-2 border-[#e8d5c4] text-[#e8d5c4]"
+            }`}>
+              1
+            </div>
+            <span className={`text-xs font-bold tracking-wider uppercase ${step >= 0 ? "text-[#c87941]" : "text-[#d6c0ad]"}`}>
+              Verify
+            </span>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col items-center gap-2 bg-white px-2">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-300 ${
+              step >= 1 
+                ? "bg-gradient-to-br from-[#c87941] to-[#ba6f3e] text-white shadow-[0_4px_12px_rgba(200,121,65,0.3)] scale-110" 
+                : "bg-white border-2 border-[#e8d5c4] text-[#e8d5c4]"
+            }`}>
+              2
+            </div>
+            <span className={`text-xs font-bold tracking-wider uppercase ${step >= 1 ? "text-[#c87941]" : "text-[#d6c0ad]"}`}>
+              Reset
+            </span>
+          </div>
+        </div>
 
         {step === 0 ? (
           <>
@@ -123,7 +148,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   size="large"
                   placeholder="Email Address"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 mb-12 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941] "
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -157,7 +182,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   size="large"
                   placeholder="First Name"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -169,7 +194,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   size="large"
                   placeholder="Last Name"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -181,7 +206,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   type="date"
                   size="large"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -194,7 +219,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   size="large"
                   placeholder="Your Answer"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -207,7 +232,7 @@ export default function ForgotPasswordPage() {
                 <Input
                   size="large"
                   placeholder="Your Answer"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -223,7 +248,7 @@ export default function ForgotPasswordPage() {
                 <Input.Password
                   size="large"
                   placeholder="New Password (min 6 characters)"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>
@@ -235,7 +260,7 @@ export default function ForgotPasswordPage() {
                 <Input.Password
                   size="large"
                   placeholder="Confirm New Password"
-                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] focus:!border-[#c87941]"
+                  className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#faf8f3] !w-full focus:!border-[#c87941]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 />
               </Form.Item>

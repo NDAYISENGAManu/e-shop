@@ -15,20 +15,20 @@ interface UserAttributes extends UserType {
 interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'role' | 'createdAt' | 'updatedAt'> { }
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: number;
-  public email!: string;
-  public password!: string;
-  public firstName!: string;
-  public lastName!: string;
-  public role!: 'user' | 'admin';
-  public mustChangePassword?: boolean;
-  public securityQuestion1?: string;
-  public securityAnswer1?: string;
-  public securityQuestion2?: string;
-  public securityAnswer2?: string;
-  public dateOfBirth?: Date;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare public id: number;
+  declare public email: string;
+  declare public password: string;
+  declare public firstName: string;
+  declare public lastName: string;
+  declare public role: 'user' | 'admin';
+  declare public mustChangePassword?: boolean;
+  declare public securityQuestion1?: string;
+  declare public securityAnswer1?: string;
+  declare public securityQuestion2?: string;
+  declare public securityAnswer2?: string;
+  declare public dateOfBirth?: Date;
+  declare public readonly createdAt: Date;
+  declare public readonly updatedAt: Date;
 }
 
 User.init(

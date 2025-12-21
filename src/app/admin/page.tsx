@@ -219,7 +219,7 @@ export default function AdminDashboard() {
             columns={columns}
             rowKey="id"
             pagination={false}
-            className="handcraft-table"
+            className="handcraft-table w-full"
             rowClassName="hover:bg-[#faf8f3] transition-colors"
           />
         </div>

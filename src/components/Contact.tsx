@@ -31,20 +31,12 @@ export default function Contact() {
           <GiftOutlined className="text-white text-4xl" />
         </div>
 
-        {/* Heading */}
-        <h2 
-          className="text-5xl md:text-6xl font-bold mb-4 text-white leading-tight"
-          style={{ fontFamily: "'Cormorant Garamond', serif" }}
-        >
-          Join Our Artisan Community
-        </h2>
-
         {/* Handwritten accent */}
         <div 
           className="text-3xl text-white/90 mb-6 -rotate-1"
           style={{ fontFamily: "'Dancing Script', cursive" }}
         >
-          & get exclusive handcraft treasures
+         get exclusive handcraft treasures
         </div>
 
         <p 
@@ -59,7 +51,7 @@ export default function Contact() {
           <Form
             form={form}
             onFinish={handleSubmit}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-4 items-center justify-center"
             layout="vertical"
           >
             <Form.Item
@@ -71,7 +63,7 @@ export default function Contact() {
                   message: "Please enter a valid email",
                 },
               ]}
-              className="flex-1 mb-0!"
+              className="flex mb-0!"
             >
               <Input
                 type="email"
@@ -134,7 +126,7 @@ export default function Contact() {
         </div>
 
         {/* Social proof */}
-        <div className="mt-8 flex items-center justify-center gap-3 text-white/90">
+        {/* <div className="mt-8 flex items-center justify-center gap-3 text-white/90">
           <div className="flex -space-x-3">
             <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg"></div>
             <div className="w-10 h-10 rounded-full bg-white border-2 border-white shadow-lg"></div>
@@ -149,7 +141,7 @@ export default function Contact() {
           >
             Join 5,000+ happy subscribers
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

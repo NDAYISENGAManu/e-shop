@@ -35,53 +35,74 @@ export default function ProductsPage() {
           All Products
         </h2>
 
-        <div className="grid gap-4 mb-12 md:grid-cols-4">
-          <Select
-            size="large"
-            value={category || undefined}
-            onChange={setCategory}
-            placeholder="All Categories"
-            className="w-full"
-            options={[
-              { value: "", label: "All Categories" },
-              { value: "office", label: "Office" },
-              { value: "living room", label: "Living Room" },
-              { value: "kitchen", label: "Kitchen" },
-              { value: "bedroom", label: "Bedroom" },
-              { value: "dining", label: "Dining" },
-              { value: "kids", label: "Kids" },
-            ]}
-          />
+        <div className="grid gap-6 mb-12 md:grid-cols-3">
+          {/* Category Filter */}
+          <div className="relative group">
+            <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-bold text-[#c87941] uppercase tracking-wider z-10 transition-colors group-hover:text-[#ba6f3e]">Category</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full h-[56px] px-4 appearance-none rounded-xl border-2 border-[#e8d5c4] bg-[#fef9f3] text-base text-[#5c4028] focus:border-[#c87941] focus:shadow-[0_0_0_4px_rgba(200,121,65,0.1)] focus:outline-none transition-all cursor-pointer hover:border-[#d6c0ad]"
+              style={{ fontFamily: "'Quicksand', sans-serif" }}
+            >
+              <option value="">All Categories</option>
+              {["office", "living room", "kitchen", "bedroom", "dining", "kids"].map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#c87941] group-hover:translate-y-[-10%] transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </div>
 
-          <Select
-            size="large"
-            value={company || undefined}
-            onChange={setCompany}
-            placeholder="All Companies"
-            className="w-full"
-            options={[
-              { value: "", label: "All Companies" },
-              { value: "marcos", label: "Marcos" },
-              { value: "liddy", label: "Liddy" },
-              { value: "ikea", label: "IKEA" },
-              { value: "caressa", label: "Caressa" },
-            ]}
-          />
+          {/* Company Filter */}
+          <div className="relative group">
+            <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-bold text-[#c87941] uppercase tracking-wider z-10 transition-colors group-hover:text-[#ba6f3e]">Company</label>
+            <select
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              className="w-full h-[56px] px-4 appearance-none rounded-xl border-2 border-[#e8d5c4] bg-[#fef9f3] text-base text-[#5c4028] focus:border-[#c87941] focus:shadow-[0_0_0_4px_rgba(200,121,65,0.1)] focus:outline-none transition-all cursor-pointer hover:border-[#d6c0ad]"
+              style={{ fontFamily: "'Quicksand', sans-serif" }}
+            >
+              <option value="">All Companies</option>
+              {["marcos", "liddy", "ikea", "caressa"].map((comp) => (
+                <option key={comp} value={comp}>
+                  {comp.charAt(0).toUpperCase() + comp.slice(1)}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#c87941] group-hover:translate-y-[-10%] transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </div>
 
-          <Select
-            size="large"
-            value={sort || undefined}
-            onChange={setSort}
-            placeholder="Sort By"
-            className="w-full"
-            options={[
-              { value: "", label: "Sort By" },
-              { value: "price-lowest", label: "Price (Lowest)" },
-              { value: "price-highest", label: "Price (Highest)" },
-              { value: "name-a", label: "Name (A-Z)" },
-              { value: "name-z", label: "Name (Z-A)" },
-            ]}
-          />
+          {/* Sort Filter */}
+          <div className="relative group">
+            <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-bold text-[#c87941] uppercase tracking-wider z-10 transition-colors group-hover:text-[#ba6f3e]">Sort By</label>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="w-full h-[56px] px-4 appearance-none rounded-xl border-2 border-[#e8d5c4] bg-[#fef9f3] text-base text-[#5c4028] focus:border-[#c87941] focus:shadow-[0_0_0_4px_rgba(200,121,65,0.1)] focus:outline-none transition-all cursor-pointer hover:border-[#d6c0ad]"
+              style={{ fontFamily: "'Quicksand', sans-serif" }}
+            >
+              <option value="">Default</option>
+              <option value="price-lowest">Price (Lowest)</option>
+              <option value="price-highest">Price (Highest)</option>
+              <option value="name-a">Name (A-Z)</option>
+              <option value="name-z">Name (Z-A)</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#c87941] group-hover:translate-y-[-10%] transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         {isLoading ? (

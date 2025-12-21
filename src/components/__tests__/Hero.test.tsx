@@ -98,7 +98,7 @@ describe("Hero", () => {
   it("should render floating badge with unique items count", () => {
     render(<Hero />);
 
-    expect(screen.getByText("500+")).toBeInTheDocument();
+    expect(screen.getByText("15+")).toBeInTheDocument();
     expect(screen.getByText("Unique Items")).toBeInTheDocument();
   });
 

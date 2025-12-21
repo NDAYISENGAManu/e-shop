@@ -55,9 +55,9 @@ export default function Navbar() {
                 <span className="text-4xl font-bold tracking-tight bg-gradient-to-r from-[#7a5838] via-[#c87941] to-[#6b7f4a] bg-clip-text text-transparent" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                   Manu
                 </span>
-                <span className="hidden md:inline-block text-sm tracking-[3px] uppercase text-[#8b6f47] opacity-70" style={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 500 }}>
+                {/* <span className="hidden md:inline-block text-sm tracking-[3px] uppercase text-[#8b6f47] opacity-70" style={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 500 }}>
                   Handcraft
-                </span>
+                </span> */}
               </div>
             </Link>
           </div>
@@ -159,13 +159,12 @@ export default function Navbar() {
               </>
             ) : (
               <Link href="/login">
-                <Button
-                  type="primary"
-                  className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-7 !py-2.5 !h-auto !font-bold !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)] hover:!-translate-y-0.5 !transition-all"
+                <button
+                  className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-7 !py-2.5 !h-auto !font-bold !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)] hover:!-translate-y-0.5 !transition-all text-white cursor-pointer"
                   style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
                 >
                   Login
-                </Button>
+                </button>
               </Link>
             )}
           </Space>

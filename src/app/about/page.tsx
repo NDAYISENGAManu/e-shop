@@ -205,13 +205,13 @@ export default function AboutPage() {
       {/* Stats Section */}
       <section className="py-20">
         <div className="w-[90vw] max-w-[1280px] mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div 
                 className="text-6xl font-bold bg-gradient-to-r from-[#c87941] to-[#ba6f3e] bg-clip-text text-transparent mb-2"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                500+
+                10+
               </div>
               <p 
                 className="text-lg text-[#5a4a3a] font-semibold"
@@ -225,7 +225,7 @@ export default function AboutPage() {
                 className="text-6xl font-bold bg-gradient-to-r from-[#6b7f4a] to-[#5a6d3d] bg-clip-text text-transparent mb-2"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                150+
+                5+
               </div>
               <p 
                 className="text-lg text-[#5a4a3a] font-semibold"
@@ -239,27 +239,13 @@ export default function AboutPage() {
                 className="text-6xl font-bold bg-gradient-to-r from-[#c87941] to-[#ba6f3e] bg-clip-text text-transparent mb-2"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                25
+                5
               </div>
               <p 
                 className="text-lg text-[#5a4a3a] font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
                 Countries
-              </p>
-            </div>
-            <div className="text-center">
-              <div 
-                className="text-6xl font-bold bg-gradient-to-r from-[#6b7f4a] to-[#5a6d3d] bg-clip-text text-transparent mb-2"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                5K+
-              </div>
-              <p 
-                className="text-lg text-[#5a4a3a] font-semibold"
-                style={{ fontFamily: "'Quicksand', sans-serif" }}
-              >
-                Happy Customers
               </p>
             </div>
           </div>

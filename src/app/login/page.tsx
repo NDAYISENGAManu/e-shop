@@ -86,7 +86,7 @@ function LoginForm() {
             <Input
               size="large"
               placeholder="Email"
-              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
+              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] !w-full focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
             />
           </Form.Item>
 
@@ -94,10 +94,10 @@ function LoginForm() {
             name="password"
             rules={[{ required: true, message: "Please enter your password" }]}
           >
-            <Input.Password
+            <Input
               size="large"
               placeholder="Password"
-              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
+              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] !w-full focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
             />
           </Form.Item>
 
