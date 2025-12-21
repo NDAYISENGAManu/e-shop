@@ -11,6 +11,7 @@ import { useNotification } from "@/components/Notification";
 import Loading from "@/components/Loading";
 import { formatPrice } from "@/utils/helpers";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -20,6 +21,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const queryClient = useQueryClient();
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const { t, language } = useLanguage();
 
   const [isAdding, setIsAdding] = useState(false);
 
@@ -46,11 +48,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
       const currentCartQuantity = cartItem ? cartItem.quantity : 0;
 
       if (currentCartQuantity > 0 && currentCartQuantity >= product.stock) {
-        showWarning(`You have all available stock (${product.stock}) in your cart.`);
+        showWarning(language === 'en' 
+          ? `You have all available stock (${product.stock}) in your cart.`
+          : `Ufite ibikoresho byose bihari (${product.stock}) mu giseke cyawe.`);
         router.push("/cart");
       }
     }
-  }, [product, cart, id, router, showWarning, session]);
+  }, [product, cart, id, router, showWarning, session, language]);
 
   const handleIncrement = () => {
     const cartItem = cart?.items?.find((item: any) => item.productId === parseInt(id));
@@ -59,8 +63,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
     if (quantity >= availableStock) {
       const message = currentCartQuantity > 0
-        ? `Cannot add more. You have ${currentCartQuantity} in cart and only ${product.stock} in stock.`
-        : `Cannot add more. You have selected all available items (${product.stock} in stock).`;
+        ? (language === 'en' 
+            ? `Cannot add more. You have ${currentCartQuantity} in cart and only ${product.stock} in stock.`
+            : `Ntabwo wakongeraho. Ufite ${currentCartQuantity} mu giseke kandi hari ${product.stock} gusa.`)
+        : (language === 'en'
+            ? `Cannot add more. You have selected all available items (${product.stock} in stock).`
+            : `Ntabwo wakongeraho. Wahisemo ibikoresho byose bihari (${product.stock} bihari).`);
       showError(message);
       return;
     }
@@ -81,18 +89,18 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         quantity,
         color: selectedColor || null,
       });
-      showSuccess("Product added to cart!");
+      showSuccess(t.common.productAdded);
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       setQuantity(1);
     } catch (error: any) {
-      showError(error.response?.data?.error || "Failed to add product to cart");
+      showError(error.response?.data?.error || (language === 'en' ? "Failed to add product to cart" : "Gushyira mu giseke ntibyagenze neza"));
     } finally {
       setIsAdding(false);
     }
   };
 
-  if (isLoading) return <Loading fullScreen text="Loading product" />;
-  if (!product) return <Loading fullScreen text="Product not found" />;
+  if (isLoading) return <Loading fullScreen text={t.common.loading} />;
+  if (!product) return <Loading fullScreen text={t.common.productNotFound} />;
 
   return (
     <div className="min-h-[calc(100vh-10rem)] py-20 bg-gradient-to-b from-white to-[#f8f9ff] animate-[fadeIn_0.6s_ease-out]">
@@ -116,7 +124,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
           {product.colors && product.colors.length > 0 && (
             <div className="mb-4">
-              <h4 className="mb-2">Colors:</h4>
+              <h4 className="mb-2">{t.common.color}:</h4>
               <div className="flex gap-2">
                 {product.colors.map((c: any) => (
                   <button
@@ -141,7 +149,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           )}
 
           <div className="mb-8 font-quicksand">
-            <h4 className="mb-2 uppercase text-xs font-bold tracking-widest text-[#7a5838]">Quantity</h4>
+            <h4 className="mb-2 uppercase text-xs font-bold tracking-widest text-[#7a5838]">{t.common.quantity}</h4>
             <div className="flex items-center gap-4 bg-[#fef9f3] w-fit p-1 rounded-full border border-[#e8d5c4]/50 shadow-inner">
               <Button
                 variant="primary"
@@ -168,7 +176,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             loading={isAdding}
             className="w-full sm:w-auto uppercase tracking-[var(--spacing)] !shadow-[0_8px_20px_rgba(200,121,65,0.3)] hover:!shadow-[0_12px_28px_rgba(200,121,65,0.4)]"
           >
-            Add to Cart
+            {t.common.addToCart}
           </Button>
         </div>
       </div>

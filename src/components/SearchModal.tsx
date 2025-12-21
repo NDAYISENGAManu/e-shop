@@ -7,10 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import { formatPrice } from "@/utils/helpers";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const { t, language } = useLanguage();
 
   const { data: results, isLoading } = useQuery({
     queryKey: ["search", searchTerm],
@@ -31,7 +33,7 @@ export default function SearchModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        title="Search products"
+        title={t.common.search}
         className="bg-transparent border-none text-[#8b6f47] text-xl cursor-pointer p-2 transition-all duration-300 flex items-center justify-center rounded-full hover:bg-[rgba(139,111,71,0.1)] hover:scale-110"
       >
         <SearchOutlined />
@@ -49,14 +51,14 @@ export default function SearchModal() {
       >
         <div className="bg-gradient-to-br from-[#8b6f47] to-[#d4a574] text-white p-6 m-0">
           <h2 className="font-serif text-2xl m-0">
-            Search Handcrafted Products
+            {language === 'en' ? "Search Handcrafted Products" : "Shaka Ibihimbano by'intoki"}
           </h2>
         </div>
 
         <div className="p-8 bg-white">
           <Input
             size="large"
-            placeholder="Search for artisan products..."
+            placeholder={language === 'en' ? "Search for artisan products..." : "Shakisha ibihimbano bibereye ijisho..."}
             prefix={<SearchOutlined />}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -68,7 +70,7 @@ export default function SearchModal() {
         <div className="max-h-[400px] overflow-y-auto px-8 pb-8 bg-white">
           {isLoading ? (
             <div className="text-center py-12 text-[#8b6f47] text-lg">
-              Searching our artisan collection...
+              {language === 'en' ? "Searching our artisan collection..." : "Turishakira umuhengeri w'ubuhanga..."}
             </div>
           ) : searchTerm && results && results.length > 0 ? (
             results.map((product: any) => (
@@ -99,13 +101,13 @@ export default function SearchModal() {
           ) : searchTerm ? (
             <div className="text-center py-12 text-[var(--clr-grey-5)]">
               <SearchOutlined className="text-5xl text-[#d4a574] mb-4" />
-              <p className="text-lg">No handcrafted items found</p>
+              <p className="text-lg">{language === 'en' ? "No handcrafted items found" : "Ntabwo tubonye ibihimbano bijyanye n'ibyo ushaka"}</p>
             </div>
           ) : (
             <div className="text-center py-12 text-[var(--clr-grey-5)]">
               <SearchOutlined className="text-5xl text-[#d4a574] mb-4" />
               <p className="text-lg">
-                Start typing to search our artisan collection
+                {language === 'en' ? "Start typing to search our artisan collection" : "Tangira wandike dushakishe mu buhanga bwacu"}
               </p>
             </div>
           )}

@@ -11,11 +11,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useEffect } from "react";
 import { formatPrice } from "@/utils/helpers";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function CartPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { showSuccess, showError } = useNotification();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -39,15 +41,15 @@ export default function CartPage() {
   const handleRemove = async (itemId: number) => {
     try {
       await axios.delete("/api/cart", { data: { itemId } });
-      showSuccess("Item removed from cart");
+      showSuccess(t.common.itemRemoved);
       refetch();
     } catch (error) {
-      showError("Failed to remove item");
+      showError(language === 'en' ? "Failed to remove item" : "Gukuramo igikoresho ntibyagenze neza");
     }
   };
 
   if (status === "loading" || (status === "authenticated" && isLoading)) {
-    return <Loading fullScreen text="Loading cart" />;
+    return <Loading fullScreen text={t.common.loading} />;
   }
 
   if (status === "unauthenticated") {
@@ -65,22 +67,21 @@ export default function CartPage() {
       <div className="min-h-[calc(100vh-10rem)] py-20 bg-gradient-to-b from-[#fef9f3] to-[#fff5eb]">
         <div className="w-[90vw] max-w-[var(--max-width)] mx-auto">
           <h2 className="text-center mb-12 text-5xl bg-gradient-to-br from-[#8b6f47] to-[#d4a574] bg-clip-text text-transparent font-bold font-serif">
-            Shopping Cart
+            {t.common.cart}
           </h2>
           <div className="text-center p-16 bg-white rounded-2xl shadow-[0_10px_30px_rgba(139,111,71,0.08)] border-2 border-[#f5ebe0]">
             <ShoppingCartOutlined className="text-[5rem] text-[#d4a574] mb-8 opacity-70" />
             <h2 className="text-[#8b6f47] mb-4 font-serif text-3xl">
-              Your Cart is Empty
+              {t.common.emptyCart}
             </h2>
             <p className="text-[var(--clr-grey-5)] mb-8 text-lg leading-relaxed">
-              You haven't added any items to your cart yet. Start shopping to
-              find amazing products!
+              {t.common.emptyCartMsg}
             </p>
             <Link
               href="/products"
               className="inline-block px-10 py-4 bg-gradient-to-br from-[#8b6f47] to-[#d4a574] text-white rounded-full font-bold tracking-wide transition-all duration-300 shadow-[0_8px_20px_rgba(139,111,71,0.3)] uppercase hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(139,111,71,0.4)]"
             >
-              Browse Products
+              {t.common.browseProducts}
             </Link>
           </div>
         </div>
@@ -92,7 +93,7 @@ export default function CartPage() {
     <div className="min-h-[calc(100vh-10rem)] py-20 bg-gradient-to-b from-[#fef9f3] to-[#fff5eb]">
       <div className="w-[90vw] max-w-[var(--max-width)] mx-auto">
         <h2 className="text-center mb-12 text-5xl bg-gradient-to-br from-[#8b6f47] to-[#d4a574] bg-clip-text text-transparent font-bold font-serif">
-          Shopping Cart
+          {t.common.cart}
         </h2>
 
         {items.map((item: any) => (
@@ -110,10 +111,10 @@ export default function CartPage() {
                 {item.product.name}
               </h5>
               <p className="text-[var(--clr-grey-5)] mb-2 text-sm">
-                Color: {item.color}
+                {t.common.color}: {item.color}
               </p>
               <p className="text-[var(--clr-grey-5)] mb-2 text-sm">
-                Quantity: {item.quantity}
+                {t.common.quantity}: {item.quantity}
               </p>
               <p className="text-lg font-bold text-[#8b6f47]">
                 {formatPrice(item.product.price * item.quantity)}
@@ -125,21 +126,21 @@ export default function CartPage() {
               onClick={() => handleRemove(item.id)}
               className="!px-6 !py-3 !h-auto !shadow-[0_4px_12px_rgba(220,53,69,0.3)] hover:!-translate-y-1 hover:!shadow-[0_6px_16px_rgba(220,53,69,0.4)] active:!translate-y-0"
             >
-              Remove
+              {t.common.remove}
             </Button>
           </div>
         ))}
 
         <div className="mt-8 p-10 bg-gradient-to-br from-[#fff5eb] to-[#fef9f3] rounded-2xl text-right border-2 border-[#e8d5c4] shadow-[0_8px_24px_rgba(139,111,71,0.12)]">
           <h3 className="mb-6 text-3xl text-[#8b6f47] font-serif">
-            Total: {formatPrice(total)}
+            {t.common.total}: {formatPrice(total)}
           </h3>
           <Button
             variant="primary"
             size="lg"
             className="!mt-4 !px-10 !py-6 !h-auto uppercase !font-bold tracking-wide !shadow-[0_8px_20px_rgba(139,111,71,0.3)] hover:!-translate-y-1 hover:!shadow-[0_12px_28px_rgba(139,111,71,0.4)] active:!translate-y-0"
           >
-            Proceed to Checkout
+            {t.common.checkout}
           </Button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { useLanguage } from "@/context/LanguageContext";
 
 const { Title, Text } = Typography;
 
@@ -19,6 +20,7 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [userQuestions, setUserQuestions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const { t, language } = useLanguage();
 
   const handleEmailSubmit = async (values: { email: string }) => {
     setLoading(true);
@@ -31,7 +33,7 @@ export default function ForgotPasswordPage() {
       setEmail(values.email);
       setStep(1);
     } catch (error: any) {
-      showError(error.response?.data?.error || "Email not found");
+      showError(error.response?.data?.error || (language === 'en' ? "Email not found" : "Imeli ntibonetse"));
     } finally {
       setLoading(false);
     }
@@ -39,12 +41,12 @@ export default function ForgotPasswordPage() {
 
   const handleResetPassword = async (values: any) => {
     if (values.newPassword !== values.confirmPassword) {
-      showError("Passwords do not match");
+      showError(language === 'en' ? "Passwords do not match" : "Amagambo y'ibanga ntabwo ahuye");
       return;
     }
 
     if (values.newPassword.length < 6) {
-      showError("Password must be at least 6 characters");
+      showError(language === 'en' ? "Password must be at least 6 characters" : "Ijambo ry'ibanga rigomba kugira inyuguti nibura 6");
       return;
     }
 
@@ -60,10 +62,10 @@ export default function ForgotPasswordPage() {
         newPassword: values.newPassword,
       });
 
-      showSuccess("Password reset successful! Redirecting to login...");
+      showSuccess(language === 'en' ? "Password reset successful! Redirecting to login..." : "Ijambo ry'ibanga ryahinduwe neza! Turakugeza ahabanza...");
       setTimeout(() => router.push("/login"), 2000);
     } catch (error: any) {
-      showError(error.response?.data?.error || "Failed to reset password");
+      showError(error.response?.data?.error || (language === 'en' ? "Failed to reset password" : "Guhindura ijambo ry'ibanga ntibyagenze neza"));
     } finally {
       setLoading(false);
     }
@@ -92,7 +94,7 @@ export default function ForgotPasswordPage() {
             backgroundClip: 'text'
           }}
         >
-          Reset Password
+          {t.auth.resetTitle}
         </Title>
 
         {/* Custom Handcraft Stepper */}
@@ -110,7 +112,7 @@ export default function ForgotPasswordPage() {
               1
             </div>
             <span className={`text-xs font-bold tracking-wider uppercase ${step >= 0 ? "text-[#c87941]" : "text-[#d6c0ad]"}`}>
-              Verify
+              {language === 'en' ? 'Verify' : 'Genzura'}
             </span>
           </div>
 
@@ -124,7 +126,7 @@ export default function ForgotPasswordPage() {
               2
             </div>
             <span className={`text-xs font-bold tracking-wider uppercase ${step >= 1 ? "text-[#c87941]" : "text-[#d6c0ad]"}`}>
-              Reset
+              {language === 'en' ? 'Reset' : 'Hindura'}
             </span>
           </div>
         </div>
@@ -135,7 +137,7 @@ export default function ForgotPasswordPage() {
               className="block text-center text-[#7a5838] mb-6 leading-relaxed"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Enter your email address to begin the password reset process.
+              {t.auth.resetSubtitle}
             </Text>
             <Form onFinish={handleEmailSubmit} layout="vertical">
               <Form.Item
@@ -144,11 +146,11 @@ export default function ForgotPasswordPage() {
                   {
                     required: true,
                     type: "email",
-                    message: "Please enter a valid email",
+                    message: language === 'en' ? "Please enter a valid email" : "Andika imeli yukuri",
                   },
                 ]}
               >
-                <Input placeholder="Email Address" className="mb-12" />
+                <Input placeholder={t.auth.email} className="mb-12" />
               </Form.Item>
               <Button
                 type="submit"
@@ -157,7 +159,7 @@ export default function ForgotPasswordPage() {
                 size="lg"
                 className="uppercase tracking-wider !py-4"
               >
-                {loading ? "Verifying..." : "Continue"}
+                {loading ? `${language === 'en' ? 'Verifying' : 'Turagenzura'}...` : (language === 'en' ? 'Continue' : 'Komeza')}
               </Button>
             </Form>
           </>
@@ -167,28 +169,29 @@ export default function ForgotPasswordPage() {
               className="block text-center text-[#7a5838] mb-6 leading-relaxed"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Please answer your security questions and provide additional
-              information to verify your identity.
+              {language === 'en' 
+                ? "Please answer your security questions and provide additional information to verify your identity."
+                : "Subiza ibibazo by'umutekano hanyuma utange andi makuru kugira ngo tumenye ko ari wowe."}
             </Text>
             <Form onFinish={handleResetPassword} layout="vertical">
               <Form.Item
-                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>First Name</span>}
+                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{language === 'en' ? "First Name" : "Izina ry'idini"}</span>}
                 name="firstName"
-                rules={[{ required: true, message: "Please enter your first name" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please enter your first name" : "Andika izina ry'idini" }]}
               >
-                <Input placeholder="First Name" />
+                <Input placeholder={language === 'en' ? "First Name" : "Izina ry'idini"} />
               </Form.Item>
               <Form.Item
-                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Last Name</span>}
+                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{language === 'en' ? "Last Name" : "Izina rya se"}</span>}
                 name="lastName"
-                rules={[{ required: true, message: "Please enter your last name" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please enter your last name" : "Andika izina rya se" }]}
               >
-                <Input placeholder="Last Name" />
+                <Input placeholder={language === 'en' ? "Last Name" : "Izina rya se"} />
               </Form.Item>
               <Form.Item
-                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Date of Birth</span>}
+                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{language === 'en' ? "Date of Birth" : "Itariki y'amavuko"}</span>}
                 name="dateOfBirth"
-                rules={[{ required: true, message: "Please select your date of birth" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please select your date of birth" : "Hitamo itariki y'amavuko" }]}
               >
                 <Input type="date" />
               </Form.Item>
@@ -196,35 +199,35 @@ export default function ForgotPasswordPage() {
               <Form.Item
                 name="answer1"
                 label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{userQuestions[0]}</span>}
-                rules={[{ required: true, message: "Please answer this question" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please answer this question" : "Subiza iki kibazo" }]}
               >
-                <Input placeholder="Your Answer" />
+                <Input placeholder={language === 'en' ? "Your Answer" : "Igisubizo cyawe"} />
               </Form.Item>
 
               <Form.Item
                 name="answer2"
                 label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{userQuestions[1]}</span>}
-                rules={[{ required: true, message: "Please answer this question" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please answer this question" : "Subiza iki kibazo" }]}
               >
-                <Input placeholder="Your Answer" />
+                <Input placeholder={language === 'en' ? "Your Answer" : "Igisubizo cyawe"} />
               </Form.Item>
 
               <Form.Item
-                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>New Password</span>}
+                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{language === 'en' ? "New Password" : "Ijambo ry'ibanga rishya"}</span>}
                 name="newPassword"
                 rules={[
-                  { required: true, message: "Please enter your new password" },
-                  { min: 6, message: "Password must be at least 6 characters" },
+                  { required: true, message: language === 'en' ? "Please enter your new password" : "Andika ijambo ry'ibanga rishya" },
+                  { min: 6, message: language === 'en' ? "Password must be at least 6 characters" : "Ijambo ry'ibanga rigomba kugira inyuguti nibura 6" },
                 ]}
               >
-                <PasswordInput placeholder="New Password (min 6 characters)" />
+                <PasswordInput placeholder={`${language === 'en' ? "New Password" : "Ijambo ry'ibanga rishya"} (min 6 characters)`} />
               </Form.Item>
               <Form.Item
-                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Confirm Password</span>}
+                label={<span className="text-[#7a5838] font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>{language === 'en' ? "Confirm Password" : "Soma ijambo ry'ibanga"}</span>}
                 name="confirmPassword"
-                rules={[{ required: true, message: "Please confirm your password" }]}
+                rules={[{ required: true, message: language === 'en' ? "Please confirm your password" : "Soma ijambo ry'ibanga" }]}
               >
-                <PasswordInput placeholder="Confirm New Password" />
+                <PasswordInput placeholder={language === 'en' ? "Confirm New Password" : "Soma ijambo ry'ibanga rishya"} />
               </Form.Item>
 
               <Button
@@ -234,7 +237,7 @@ export default function ForgotPasswordPage() {
                 size="lg"
                 className="uppercase tracking-wider !py-4"
               >
-                {loading ? "Resetting..." : "Reset Password"}
+                {loading ? `${language === 'en' ? 'Resetting' : 'Turahindura'}...` : t.auth.resetTitle}
               </Button>
             </Form>
           </>
@@ -246,7 +249,7 @@ export default function ForgotPasswordPage() {
             className="text-[#c87941] font-semibold transition-all duration-300 hover:text-[#6b7f4a]"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            ← Back to Login
+            ← {t.auth.backToLogin}
           </Link>
         </div>
       </div>

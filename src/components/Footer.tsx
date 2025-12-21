@@ -1,8 +1,10 @@
 "use client";
 
 import { HeartOutlined, InstagramOutlined, FacebookOutlined, TwitterOutlined } from "@ant-design/icons";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="relative mt-auto bg-gradient-to-br from-[#2d2416] via-[#3a2d1d] to-[#2d2416] text-white overflow-hidden">
       {/* Decorative top wave */}
@@ -39,12 +41,12 @@ export default function Footer() {
                   Manu Handcraft
                 </h3>
                 <p className="text-xs text-[#d4a574]" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-                  Made with love
+                  {t.common.madeWithLove}
                 </p>
               </div>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-              Curating authentic handmade treasures from passionate artisans around the world. Each piece tells a unique story.
+              {t.footer.brandDesc}
             </p>
           </div>
 
@@ -54,27 +56,27 @@ export default function Footer() {
               className="text-lg font-bold mb-4 text-[#d4a574]"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Quick Links
+              {t.common.quickLinks}
             </h4>
             <ul className="space-y-2" style={{ fontFamily: "'Quicksand', sans-serif" }}>
               <li>
                 <a href="/about" className="text-gray-300 hover:text-[#c87941] transition-colors text-sm">
-                  About Us
+                  {t.common.aboutUs}
                 </a>
               </li>
               <li>
                 <a href="/products" className="text-gray-300 hover:text-[#c87941] transition-colors text-sm">
-                  Shop
+                  {t.common.shop}
                 </a>
               </li>
               <li>
                 <a href="/orders" className="text-gray-300 hover:text-[#c87941] transition-colors text-sm">
-                  Track Order
+                  {t.common.trackOrder}
                 </a>
               </li>
               <li>
                 <a href="/contact" className="text-gray-300 hover:text-[#c87941] transition-colors text-sm">
-                  Contact
+                  {t.common.contact}
                 </a>
               </li>
             </ul>
@@ -86,7 +88,7 @@ export default function Footer() {
               className="text-lg font-bold mb-4 text-[#d4a574]"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Connect With Us
+              {t.common.connect}
             </h4>
             <div className="flex gap-3 mb-4">
               <a 
@@ -109,7 +111,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="text-sm text-gray-300" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-              Follow us for artisan stories and new collections
+              {t.common.followUs}
             </p>
           </div>
         </div>
@@ -120,12 +122,12 @@ export default function Footer() {
             <p style={{ fontFamily: "'Quicksand', sans-serif" }}>
               © {new Date().getFullYear()} 
               <span className="text-[#c87941] font-semibold"> Manu Handcraft</span>. 
-              All rights reserved.
+              {t.common.footerRights}
             </p>
             <p className="flex items-center gap-2" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-              Crafted with 
+              {t.common.footerCrafted} 
               <HeartOutlined className="text-[#c87941] animate-pulse" /> 
-              by Manu Handcraft
+              {t.common.by} Manu Handcraft
             </p>
           </div>
         </div>

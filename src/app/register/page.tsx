@@ -10,6 +10,7 @@ import { NativeSelect } from "@/components/ui/NativeSelect";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { useLanguage } from "@/context/LanguageContext";
 
 const { Title, Text } = Typography;
 
@@ -26,15 +27,16 @@ export default function RegisterPage() {
   const router = useRouter();
   const { showSuccess, showError } = useNotification();
   const [loading, setLoading] = useState(false);
+  const { t, language } = useLanguage();
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
     try {
       await axios.post("/api/auth/register", values);
-      showSuccess("Registration successful! Redirecting to login...");
+      showSuccess(language === 'en' ? "Registration successful! Redirecting to login..." : "Kwiyandikisha byagenze neza! Turakugeza ahabanza...");
       setTimeout(() => router.push("/login"), 1500);
     } catch (error: any) {
-      showError(error.response?.data?.error || "Registration failed");
+      showError(error.response?.data?.error || (language === 'en' ? "Registration failed" : "Kwiyandikisha ntibyagenze neza"));
     } finally {
       setLoading(false);
     }
@@ -47,10 +49,10 @@ export default function RegisterPage() {
           level={2}
           className="text-center mb-2 mt-4 !text-4xl bg-gradient-to-br from-[#8b6f47] to-[#d4a574] bg-clip-text !text-transparent font-serif"
         >
-          Join Our Community
+          {t.auth.registerTitle}
         </Title>
         <Text className="block text-center text-[var(--clr-grey-5)] mb-8 text-sm">
-          Create an account to start your creative journey
+          {t.auth.registerSubtitle}
         </Text>
 
         <Form
@@ -64,16 +66,16 @@ export default function RegisterPage() {
         >
           <Form.Item
             name="firstName"
-            rules={[{ required: true, message: "Please enter your first name" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please enter your first name" : "Andika izina ry'idini" }]}
           >
-            <Input placeholder="First Name" />
+            <Input placeholder={language === 'en' ? "First Name" : "Izina ry'idini"} />
           </Form.Item>
 
           <Form.Item
             name="lastName"
-            rules={[{ required: true, message: "Please enter your last name" }]}
+            rules={[{ required: true, message: language === 'en' ? "Please enter your last name" : "Andika izina rya se" }]}
           >
-            <Input placeholder="Last Name" />
+            <Input placeholder={language === 'en' ? "Last Name" : "Izina rya se"} />
           </Form.Item>
 
           <Form.Item
@@ -82,43 +84,43 @@ export default function RegisterPage() {
               {
                 required: true,
                 type: "email",
-                message: "Please enter a valid email",
+                message: language === 'en' ? "Please enter a valid email" : "Andika imeli yukuri",
               },
             ]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder={t.auth.email} />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[
-              { required: true, message: "Please enter your password" },
-              { min: 6, message: "Password must be at least 6 characters" },
+              { required: true, message: language === 'en' ? "Please enter your password" : "Andika ijambo ry'ibanga" },
+              { min: 6, message: language === 'en' ? "Password must be at least 6 characters" : "Ijambo ry'ibanga rigomba kugira inyuguti nibura 6" },
             ]}
           >
-            <PasswordInput placeholder="Password (min 6 characters)" />
+            <PasswordInput placeholder={`${t.auth.password} (min 6 characters)`} />
           </Form.Item>
 
           <Form.Item
             name="dateOfBirth"
             rules={[
-              { required: true, message: "Please select your date of birth" },
+              { required: true, message: language === 'en' ? "Please select your date of birth" : "Hitamo itariki y'amavuko" },
             ]}
           >
             <Input type="date" />
           </Form.Item>
 
           <h3 className="w-full text-left text-base text-[#8b6f47] mb-2 font-semibold uppercase tracking-wide">
-            🔒 Security Questions
+            🔒 {language === 'en' ? "Security Questions" : "Ibibazo by'umutekano"}
           </h3>
 
           <div className="space-y-2">
             <Form.Item
               name="securityQuestion1"
-              rules={[{ required: true, message: "Please select a question" }]}
+              rules={[{ required: true, message: language === 'en' ? "Please select a question" : "Hitamo ikibazo" }]}
             >
               <NativeSelect
-                placeholder="Select your first question"
+                placeholder={language === 'en' ? "Select your first question" : "Hitamo ikibazo cya mbere"}
                 options={SECURITY_QUESTIONS.map((q) => ({
                   label: q,
                   value: q,
@@ -127,9 +129,9 @@ export default function RegisterPage() {
             </Form.Item>
             <Form.Item
               name="securityAnswer1"
-              rules={[{ required: true, message: "Please enter your answer" }]}
+              rules={[{ required: true, message: language === 'en' ? "Please enter your answer" : "Andika igisubizo" }]}
             >
-              <Input placeholder="Your Answer" />
+              <Input placeholder={language === 'en' ? "Your Answer" : "Igisubizo cyawe"} />
             </Form.Item>
           </div>
 
@@ -146,10 +148,10 @@ export default function RegisterPage() {
                   <Form.Item
                     name="securityQuestion2"
                     dependencies={["securityQuestion1"]}
-                    rules={[{ required: true, message: "Please select a question" }]}
+                    rules={[{ required: true, message: language === 'en' ? "Please select a question" : "Hitamo ikibazo" }]}
                   >
                     <NativeSelect
-                      placeholder="Select your second question"
+                      placeholder={language === 'en' ? "Select your second question" : "Hitamo ikibazo cya kabiri"}
                       options={SECURITY_QUESTIONS.filter((q) => q !== q1).map((q) => ({
                         label: q,
                         value: q,
@@ -161,9 +163,9 @@ export default function RegisterPage() {
             </Form.Item>
             <Form.Item
               name="securityAnswer2"
-              rules={[{ required: true, message: "Please enter your answer" }]}
+              rules={[{ required: true, message: language === 'en' ? "Please enter your answer" : "Andika igisubizo" }]}
             >
-              <Input placeholder="Your Answer" />
+              <Input placeholder={language === 'en' ? "Your Answer" : "Igisubizo cyawe"} />
             </Form.Item>
           </div>
 
@@ -174,17 +176,17 @@ export default function RegisterPage() {
             fullWidth
             className="uppercase tracking-wider !py-4"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? `${t.common.loading}...` : t.auth.registerBtn}
           </Button>
         </Form>
 
         <Text className="text-center mt-2 text-[var(--clr-grey-5)]">
-          Already have an account?{" "}
+          {t.auth.alreadyHaveAccount}{" "}
           <Link
             href="/login"
             className="text-[#8b6f47] font-semibold transition-all duration-300 hover:text-[#d4a574]"
           >
-            Login
+            {t.auth.loginLink}
           </Link>
         </Text>
       </div>

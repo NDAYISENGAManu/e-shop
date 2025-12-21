@@ -7,9 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SearchModal from "./SearchModal";
 import { Button } from "./ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const { t } = useLanguage();
 
   const { data: cart } = useQuery({
     queryKey: ["cart"],
@@ -70,7 +73,7 @@ export default function Navbar() {
                 className="relative px-6 py-3 text-[#7a5838] text-base font-bold capitalize tracking-wide rounded-full transition-all hover:text-[#c87941] group overflow-hidden"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                <span className="relative z-10">Home</span>
+                <span className="relative z-10">{t.common.home}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#c87941]/10 to-[#6b7f4a]/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
               </Link>
             </li>
@@ -81,7 +84,7 @@ export default function Navbar() {
                 className="relative px-6 py-3 text-[#7a5838] text-base font-bold capitalize tracking-wide rounded-full transition-all hover:text-[#c87941] group overflow-hidden"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                <span className="relative z-10">About</span>
+                <span className="relative z-10">{t.common.about}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#c87941]/10 to-[#6b7f4a]/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
               </Link>
             </li>
@@ -92,7 +95,7 @@ export default function Navbar() {
                 className="relative px-6 py-3 text-[#7a5838] text-base font-bold capitalize tracking-wide rounded-full transition-all hover:text-[#c87941] group overflow-hidden"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                <span className="relative z-10">Shop</span>
+                <span className="relative z-10">{t.common.shop}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#c87941]/10 to-[#6b7f4a]/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
                 {/* Small decorative underline dot */}
                 <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-[#c87941] rounded-full opacity-0 group-hover:opacity-100 transition-opacity -translate-x-1/2"></div>
@@ -105,7 +108,7 @@ export default function Navbar() {
                 className="relative px-6 py-3 text-[#7a5838] text-base font-bold capitalize tracking-wide rounded-full transition-all hover:text-[#c87941] group overflow-hidden"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                <span className="relative z-10">Orders</span>
+                <span className="relative z-10">{t.common.orders}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#c87941]/10 to-[#6b7f4a]/10 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
               </Link>
             </li>
@@ -129,8 +132,10 @@ export default function Navbar() {
                   </span>
                 )}
               </div>
-              <span className="font-bold tracking-wide">Cart</span>
+              {/* <span className="font-bold tracking-wide">{t.common.cart}</span> */}
             </Link>
+
+            <LanguageSwitcher />
 
             {session ? (
               <>
@@ -140,7 +145,7 @@ export default function Navbar() {
                     className="px-5 py-2.5 text-[#7a5838] bg-gradient-to-r from-[#6b7f4a]/20 to-[#c87941]/20 font-bold rounded-full hover:from-[#6b7f4a]/30 hover:to-[#c87941]/30 transition-all shadow-sm hover:shadow-md border border-[#e8d5c4]"
                     style={{ fontFamily: "'Quicksand', sans-serif" }}
                   >
-                    Back Office
+                    {t.common.backOffice}
                   </Link>
                 )}
                 <Button
@@ -148,7 +153,7 @@ export default function Navbar() {
                   onClick={() => signOut()}
                   className="!px-7 !py-2.5 !h-auto !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)]"
                 >
-                  Logout
+                  {t.common.logout}
                 </Button>
               </>
             ) : (
@@ -157,7 +162,7 @@ export default function Navbar() {
                   className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-7 !py-2.5 !h-auto !font-bold !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)] hover:!-translate-y-0.5 !transition-all text-white cursor-pointer"
                   style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
                 >
-                  Login
+                  {t.common.login}
                 </button>
               </Link>
             )}

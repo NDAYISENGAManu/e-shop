@@ -1,8 +1,11 @@
 "use client";
 
 import { HeartOutlined, ThunderboltOutlined, SafetyOutlined, SmileOutlined } from "@ant-design/icons";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#faf8f3] via-[#fff5eb] to-[#faf8f3]">
       {/* Hero Section */}
@@ -20,7 +23,7 @@ export default function AboutPage() {
                 className="text-[#7a5838] font-bold tracking-[3px] uppercase text-sm"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Our Story
+                {t.about.heroBadge}
               </span>
             </div>
 
@@ -29,9 +32,9 @@ export default function AboutPage() {
               className="text-6xl md:text-7xl font-bold mb-6 leading-tight"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              <span className="block text-[#2d2416]">Celebrating the</span>
+              <span className="block text-[#2d2416]">{t.about.heroTitleLine1}</span>
               <span className="block bg-gradient-to-r from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] bg-clip-text text-transparent">
-                Art of Handcraft
+                {t.about.heroTitleLine2}
               </span>
             </h1>
 
@@ -39,7 +42,7 @@ export default function AboutPage() {
               className="text-xl text-[#5a4a3a] max-w-[700px] mx-auto leading-relaxed mb-8"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Where every piece tells a story of passion, tradition, and the timeless beauty of handmade craftsmanship.
+              {t.about.heroSubtitle}
             </p>
 
             {/* Handwritten accent */}
@@ -47,7 +50,7 @@ export default function AboutPage() {
               className="text-3xl text-[#c87941] opacity-80 -rotate-1"
               style={{ fontFamily: "'Dancing Script', cursive" }}
             >
-              Made with love, by hands that care
+              {t.about.heroAccent}
             </div>
           </div>
 
@@ -81,7 +84,7 @@ export default function AboutPage() {
               className="text-5xl font-bold mb-6 text-[#2d2416]"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Our Mission
+              {t.about.missionTitle}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#c87941] to-[#6b7f4a] mx-auto rounded-full"></div>
           </div>
@@ -91,19 +94,13 @@ export default function AboutPage() {
               className="text-xl text-[#5a4a3a] leading-relaxed text-center mb-6"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              At <span className="font-bold text-[#c87941]">Manu Handcraft</span>, we're more than just a marketplace. 
-              We're a community that celebrates the beauty of handmade artistry. Each piece in our collection 
-              is carefully curated from talented artisans around the world who pour their heart and soul into 
-              their craft.
+              {t.about.missionText1}
             </p>
             <p 
               className="text-xl text-[#5a4a3a] leading-relaxed text-center"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              We believe that handcrafted items carry a special energy—the warmth of human touch, the pride of 
-              creation, and the joy of artistry. When you choose handmade, you're not just buying a product; 
-              you're embracing a story, supporting a dream, and preserving traditional craftsmanship for future 
-              generations.
+              {t.about.missionText2}
             </p>
           </div>
         </div>
@@ -117,7 +114,7 @@ export default function AboutPage() {
               className="text-5xl font-bold mb-6 text-[#2d2416]"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              What We Stand For
+              {t.about.valuesTitle}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#c87941] to-[#6b7f4a] mx-auto rounded-full"></div>
           </div>
@@ -132,13 +129,13 @@ export default function AboutPage() {
                 className="text-2xl font-bold mb-4 text-[#2d2416]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Authenticity
+                {t.about.value1Title}
               </h3>
               <p 
                 className="text-[#5a4a3a] leading-relaxed"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                100% genuine handmade products. No mass production, no shortcuts—just pure, authentic craftsmanship.
+                {t.about.value1Desc}
               </p>
             </div>
 
@@ -151,13 +148,13 @@ export default function AboutPage() {
                 className="text-2xl font-bold mb-4 text-[#2d2416]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Sustainability
+                {t.about.value2Title}
               </h3>
               <p 
                 className="text-[#5a4a3a] leading-relaxed"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Eco-friendly materials and sustainable practices. We care for our planet as much as our craft.
+                {t.about.value2Desc}
               </p>
             </div>
 
@@ -170,13 +167,13 @@ export default function AboutPage() {
                 className="text-2xl font-bold mb-4 text-[#2d2416]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Empowerment
+                {t.about.value3Title}
               </h3>
               <p 
                 className="text-[#5a4a3a] leading-relaxed"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Supporting artisans worldwide by providing fair wages and a global platform for their talents.
+                {t.about.value3Desc}
               </p>
             </div>
 
@@ -189,13 +186,13 @@ export default function AboutPage() {
                 className="text-2xl font-bold mb-4 text-[#2d2416]"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Joy
+                {t.about.value4Title}
               </h3>
               <p 
                 className="text-[#5a4a3a] leading-relaxed"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Bringing happiness to your home with unique pieces that spark conversation and warm hearts.
+                {t.about.value4Desc}
               </p>
             </div>
           </div>
@@ -217,7 +214,7 @@ export default function AboutPage() {
                 className="text-lg text-[#5a4a3a] font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Unique Products
+                {t.about.statsProducts}
               </p>
             </div>
             <div className="text-center">
@@ -231,7 +228,7 @@ export default function AboutPage() {
                 className="text-lg text-[#5a4a3a] font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Talented Artisans
+                {t.about.statsArtisans}
               </p>
             </div>
             <div className="text-center">
@@ -245,7 +242,7 @@ export default function AboutPage() {
                 className="text-lg text-[#5a4a3a] font-semibold"
                 style={{ fontFamily: "'Quicksand', sans-serif" }}
               >
-                Countries
+                {t.about.statsCountries}
               </p>
             </div>
           </div>
@@ -260,20 +257,20 @@ export default function AboutPage() {
             className="text-5xl font-bold mb-6 text-[#2d2416]"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Start Your Journey
+            {t.about.ctaTitle}
           </h2>
           <p 
             className="text-xl text-[#5a4a3a] mb-10 leading-relaxed"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            Discover unique handcrafted treasures that will transform your space and touch your heart.
+            {t.about.ctaSubtitle}
           </p>
           <a href="/products">
             <button 
               className="bg-gradient-to-r from-[#c87941] to-[#ba6f3e] text-white px-12 py-5 rounded-full text-lg font-bold shadow-[0_8px_24px_rgba(200,121,65,0.3)] hover:shadow-[0_12px_32px_rgba(200,121,65,0.4)] hover:-translate-y-1 transition-all"
               style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
             >
-              Explore Collection →
+              {t.about.ctaButton}
             </button>
           </a>
         </div>

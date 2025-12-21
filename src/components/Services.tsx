@@ -2,39 +2,40 @@
 
 import { Card } from "antd";
 import { HeartOutlined, SafetyOutlined, TruckOutlined, CustomerServiceOutlined } from "@ant-design/icons";
-
-const services = [
-  {
-    id: 1,
-    icon: <HeartOutlined />,
-    title: "Handmade With Love",
-    text: "Every piece is crafted by skilled artisans who pour their passion and expertise into creating unique treasures.",
-    color: "from-[#c87941] to-[#ba6f3e]",
-  },
-  {
-    id: 2,
-    icon: <SafetyOutlined />,
-    title: "Quality Guaranteed",
-    text: "We carefully curate each item, ensuring authentic craftsmanship and sustainable materials for lasting beauty.",
-    color: "from-[#6b7f4a] to-[#5a6d3d]",
-  },
-  {
-    id: 3,
-    icon: <TruckOutlined />,
-    title: "Fast & Safe Delivery",
-    text: "Your handcrafted treasures are packaged with care and delivered securely to your doorstep.",
-    color: "from-[#c87941] to-[#ba6f3e]",
-  },
-  {
-    id: 4,
-    icon: <CustomerServiceOutlined />,
-    title: "Dedicated Support",
-    text: "Our friendly team is here to help you find the perfect piece and ensure your complete satisfaction.",
-    color: "from-[#6b7f4a] to-[#5a6d3d]",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Services() {
+  const { t } = useLanguage();
+  const services = [
+    {
+      id: 1,
+      icon: <HeartOutlined />,
+      title: t.services.handmadeTitle,
+      text: t.services.handmadeText,
+      color: "from-[#c87941] to-[#ba6f3e]",
+    },
+    {
+      id: 2,
+      icon: <SafetyOutlined />,
+      title: t.services.qualityTitle,
+      text: t.services.qualityText,
+      color: "from-[#6b7f4a] to-[#5a6d3d]",
+    },
+    {
+      id: 3,
+      icon: <TruckOutlined />,
+      title: t.services.deliveryTitle,
+      text: t.services.deliveryText,
+      color: "from-[#c87941] to-[#ba6f3e]",
+    },
+    {
+      id: 4,
+      icon: <CustomerServiceOutlined />,
+      title: t.services.supportTitle,
+      text: t.services.supportText,
+      color: "from-[#6b7f4a] to-[#5a6d3d]",
+    },
+  ];
   return (
     <section className="py-24 bg-gradient-to-b from-white via-[#faf8f3] to-white relative overflow-hidden">
       {/* Background decoration */}
@@ -47,13 +48,13 @@ export default function Services() {
             className="text-5xl font-bold mb-4 text-[#2d2416]"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Why Choose <span className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] bg-clip-text text-transparent">Handcraft</span>
+            {t.services.title} <span className="bg-gradient-to-r from-[#c87941] to-[#6b7f4a] bg-clip-text text-transparent">Handcraft</span>
           </h2>
           <p 
             className="text-lg text-[#5a4a3a] max-w-[600px] mx-auto"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            Experience the difference that authentic craftsmanship makes
+            {t.services.subtitle}
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-[#c87941] to-[#6b7f4a] mx-auto rounded-full mt-6"></div>
         </div>

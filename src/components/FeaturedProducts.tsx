@@ -8,10 +8,12 @@ import { Product } from "@/types";
 import Loading from "./Loading";
 import { StarFilled, HeartOutlined } from "@ant-design/icons";
 import { formatPrice } from "@/utils/helpers";
+import { useLanguage } from "@/context/LanguageContext";
 
 const { Meta } = Card;
 
 export default function FeaturedProducts() {
+  const { t, language } = useLanguage();
   const { data, isLoading } = useQuery({
     queryKey: ["featured-products"],
     queryFn: async () => {
@@ -23,7 +25,7 @@ export default function FeaturedProducts() {
   if (isLoading) {
     return (
       <section className="py-20 bg-gradient-to-b from-[#fffefa] via-[#fff5eb] to-[#fffefa]">
-        <Loading text="Loading featured products..." />
+        <Loading text={t.common.loading + '...'} />
       </section>
     );
   }
@@ -46,7 +48,7 @@ export default function FeaturedProducts() {
               className="text-[#7a5838] font-bold tracking-[3px] uppercase text-sm"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Curated For You
+              {language === 'en' ? 'Curated For You' : 'Byatoranyirijwe wowe'}
             </span>
           </div>
 
@@ -56,7 +58,7 @@ export default function FeaturedProducts() {
           >
             {/* <span className="block text-[#2d2416]">Featured</span> */}
             <span className="block bg-gradient-to-r from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] bg-clip-text text-transparent">
-              Handcrafted Treasures
+              {t.common.featuredProducts}
             </span>
           </h2>
           
@@ -64,7 +66,9 @@ export default function FeaturedProducts() {
             className="text-lg text-[#5a4a3a] max-w-[600px] mx-auto"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            Discover our hand-picked selection of unique, artisan-made pieces
+            {language === 'en' 
+              ? 'Discover our hand-picked selection of unique, artisan-made pieces'
+              : 'Iyumvire amateka n\'ubuhanga muri buri gikoresho byatoranyijwe'}
           </p>
 
           {/* Decorative underline */}
@@ -100,7 +104,7 @@ export default function FeaturedProducts() {
                         className="text-xs font-bold text-[#7a5838]"
                         style={{ fontFamily: "'Quicksand', sans-serif" }}
                       >
-                        Handmade
+                        {language === 'en' ? 'Handmade' : 'Ubuhoro'}
                       </span>
                     </div>
 
@@ -141,7 +145,7 @@ export default function FeaturedProducts() {
                       className="w-full mt-4 bg-gradient-to-r from-[#c87941] to-[#ba6f3e] text-white py-3 rounded-full font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shadow-lg"
                       style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
                     >
-                      View Details
+                      {language === 'en' ? 'View Details' : 'Reba ibindi'}
                     </button>
                   </div>
                 </div>
@@ -160,7 +164,7 @@ export default function FeaturedProducts() {
               className="bg-white border-2 border-[#c87941] text-[#c87941] px-10 py-4 rounded-full text-lg font-bold hover:bg-[#c87941] hover:text-white transition-all hover:-translate-y-1 shadow-lg hover:shadow-xl"
               style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
             >
-              Explore All Products →
+              {language === 'en' ? 'Explore All Products' : 'Reba ibikoresho byose'} →
             </button>
           </Link>
         </div>

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { useLanguage } from "@/context/LanguageContext";
 
 const { Title, Text } = Typography;
 
@@ -15,6 +16,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
+  const { t } = useLanguage();
   const redirectUrl = searchParams?.get("redirect") || "/";
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +57,7 @@ function LoginForm() {
       <div className="min-h-[calc(100vh-10rem)] grid place-items-center py-16 bg-gradient-to-br from-[#fef9f3] via-[#fff5eb] to-[#fef9f3] relative overflow-hidden">
         <div className="bg-white p-12 rounded-3xl shadow-[0_20px_60px_rgba(139,111,71,0.15)] w-[90vw] max-w-[500px] relative z-10 border-2 border-[#f5ebe0]">
           <Title level={2} className="text-center">
-            Loading...
+            {t.common.loading}...
           </Title>
         </div>
       </div>
@@ -69,10 +71,10 @@ function LoginForm() {
           level={2}
           className="text-center mb-2 mt-4 !text-4xl bg-gradient-to-br from-[#8b6f47] to-[#d4a574] bg-clip-text !text-transparent font-serif"
         >
-          Welcome Back
+          {t.auth.loginTitle}
         </Title>
         <Text className="block text-center text-[var(--clr-grey-5)] mb-8 text-sm">
-          Sign in to continue your shopping journey
+          {t.auth.loginSubtitle}
         </Text>
 
         <Form onFinish={handleSubmit} layout="vertical" className="space-y-5">
@@ -86,14 +88,14 @@ function LoginForm() {
               },
             ]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder={t.auth.email} />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[{ required: true, message: "Please enter your password" }]}
           >
-            <PasswordInput placeholder="Password" />
+            <PasswordInput placeholder={t.auth.password} />
           </Form.Item>
 
           <div className="text-right">
@@ -101,7 +103,7 @@ function LoginForm() {
               href="/forgot-password"
               className="text-[#8b6f47] text-sm transition-all duration-300 underline decoration-transparent hover:text-[#d4a574] hover:decoration-[#d4a574]"
             >
-              Forgot Password?
+              {t.auth.forgotPassword}
             </Link>
           </div>
 
@@ -118,7 +120,7 @@ function LoginForm() {
             fullWidth
             className="uppercase tracking-wider !py-4"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? `${t.common.loading}...` : t.auth.loginBtn}
           </Button>
         </Form>
 
@@ -127,12 +129,12 @@ function LoginForm() {
         </div>
 
         <Text className="text-center mt-2 text-[var(--clr-grey-5)]">
-          Don't have an account?{" "}
+          {t.auth.noAccount}{" "}
           <Link
             href="/register"
             className="text-[#8b6f47] font-semibold transition-all duration-300 hover:text-[#d4a574]"
           >
-            Register
+            {t.auth.registerLink}
           </Link>
         </Text>
       </div>
@@ -141,11 +143,12 @@ function LoginForm() {
 }
 
 export default function LoginPage() {
+  const { t } = useLanguage();
   return (
     <Suspense fallback={
       <div className="min-h-[calc(100vh-10rem)] grid place-items-center py-16 bg-gradient-to-br from-[#fef9f3] via-[#fff5eb] to-[#fef9f3]">
         <div className="bg-white p-12 rounded-3xl shadow-[0_20px_60px_rgba(139,111,71,0.15)] w-[90vw] max-w-[500px] border-2 border-[#f5ebe0]">
-          <Title level={2} className="text-center">Loading...</Title>
+          <Title level={2} className="text-center">{t.common.loading}...</Title>
         </div>
       </div>
     }>

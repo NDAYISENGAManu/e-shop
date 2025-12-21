@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+  const { t, language } = useLanguage();
   return (
     <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br from-[#faf8f3] via-[#fff5eb] to-[#fffefa]">
       {/* Organic Background Patterns */}
@@ -48,10 +50,10 @@ export default function Hero() {
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             <span className="block text-[#2d2416] font-bold">
-              Discover the
+              {language === 'en' ? 'Design Your' : 'Tekana aho'}
             </span>
             <span className="block mt-2 bg-gradient-to-r from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] bg-clip-text text-transparent font-extrabold">
-              Art of Handcraft
+              {language === 'en' ? 'Comfort Zone' : 'uba mu rugo'}
             </span>
           </h1>
 
@@ -60,7 +62,7 @@ export default function Hero() {
             className="text-4xl text-[#c87941] opacity-80 -rotate-2 inline-block"
             style={{ fontFamily: "'Dancing Script', cursive" }}
           >
-            Made by passionate artisans
+            {language === 'en' ? 'Made by passionate artisans' : 'Bikozwe n\'abanyabugeni babishaka'}
           </div>
 
           {/* Description */}
@@ -68,9 +70,7 @@ export default function Hero() {
             className="text-lg leading-relaxed text-[#5a4a3a] mb-8 max-w-[550px]"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            Every piece tells a unique story of tradition, creativity, and soul.
-            Browse our curated collection of handmade treasures, each crafted with
-            dedication and heart by talented artisans from around the world.
+            {t.hero.subtitle}
           </p>
 
           {/* CTA Buttons */}
@@ -83,7 +83,7 @@ export default function Hero() {
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
                 <span className="flex items-center gap-3">
-                  Explore Collection
+                  {t.hero.shopNow}
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </span>
               </Button>
@@ -96,7 +96,7 @@ export default function Hero() {
                 className="!px-10 !py-7 !h-auto !text-lg !font-bold !transition-all hover:!-translate-y-1 hover:!shadow-lg"
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
-                Our Story
+                {language === 'en' ? 'Our Story' : 'Amateka yacu'}
               </Button>
             </Link>
           </div>
