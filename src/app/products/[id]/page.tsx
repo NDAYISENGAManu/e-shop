@@ -1,17 +1,19 @@
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { Product } from "@/types";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/components/Notification";
 import Loading from "@/components/Loading";
+import { formatPrice } from "@/utils/helpers";
+import { Button } from "@/components/ui/Button";
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const { data: session } = useSession();
   const router = useRouter();
   const { showSuccess, showError, showWarning } = useNotification();
@@ -19,10 +21,12 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  const [isAdding, setIsAdding] = useState(false);
+
   const { data: product, isLoading } = useQuery({
-    queryKey: ["product", params.id],
+    queryKey: ["product", id],
     queryFn: async () => {
-      const response = await axios.get(`/api/products/${params.id}`);
+      const response = await axios.get(`/api/products/${id}`);
       return response.data;
     },
   });
@@ -38,7 +42,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (product && cart && session) {
-      const cartItem = cart.items?.find((item: any) => item.productId === parseInt(params.id));
+      const cartItem = cart.items?.find((item: any) => item.productId === parseInt(id));
       const currentCartQuantity = cartItem ? cartItem.quantity : 0;
 
       if (currentCartQuantity > 0 && currentCartQuantity >= product.stock) {
@@ -46,10 +50,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         router.push("/cart");
       }
     }
-  }, [product, cart, params.id, router, showWarning, session]);
+  }, [product, cart, id, router, showWarning, session]);
 
   const handleIncrement = () => {
-    const cartItem = cart?.items?.find((item: any) => item.productId === parseInt(params.id));
+    const cartItem = cart?.items?.find((item: any) => item.productId === parseInt(id));
     const currentCartQuantity = cartItem ? cartItem.quantity : 0;
     const availableStock = product.stock - currentCartQuantity;
 
@@ -70,9 +74,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       return;
     }
 
+    setIsAdding(true);
     try {
       await axios.post("/api/cart", {
-        productId: params.id,
+        productId: parseInt(id),
         quantity,
         color: selectedColor || null,
       });
@@ -81,6 +86,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       setQuantity(1);
     } catch (error: any) {
       showError(error.response?.data?.error || "Failed to add product to cart");
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -103,7 +110,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             {product.name}
           </h2>
           <p className="text-[var(--clr-primary-5)] text-2xl font-semibold mb-4">
-            ${(product.price / 100).toFixed(2)}
+            {formatPrice(product.price)}
           </p>
           <p className="leading-14 mb-8">{product.description}</p>
 
@@ -133,28 +140,33 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
           )}
 
-          <div className="mb-8">
-            <h4 className="mb-2">Quantity:</h4>
-            <div className="flex items-center gap-4">
+          <div className="mb-8 font-quicksand">
+            <h4 className="mb-2 uppercase text-xs font-bold tracking-widest text-[#7a5838]">Quantity</h4>
+            <div className="flex items-center gap-4 bg-[#fef9f3] w-fit p-1 rounded-full border border-[#e8d5c4]/50 shadow-inner">
               <Button
-                type="primary"
-                icon={<MinusOutlined />}
+                variant="primary"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              />
-              <span className="text-2xl font-semibold">{quantity}</span>
+                className="!p-3 !h-12 !w-12 !min-w-0 rounded-full flex items-center justify-center"
+              >
+                <MinusOutlined />
+              </Button>
+              <span className="text-2xl font-bold w-12 text-center text-[#2d2416] tabular-nums">{quantity}</span>
               <Button
-                type="primary"
-                icon={<PlusOutlined />}
+                variant="primary"
                 onClick={handleIncrement}
-              />
+                className="!p-3 !h-12 !w-12 !min-w-0 rounded-full flex items-center justify-center"
+              >
+                <PlusOutlined />
+              </Button>
             </div>
           </div>
 
           <Button
-            type="primary"
-            size="large"
+            variant="primary"
+            size="lg"
             onClick={handleAddToCart}
-            className="!bg-gradient-to-br from-[var(--clr-primary-5)] to-[var(--clr-primary-7)] !px-10 !py-6 !h-auto uppercase tracking-[var(--spacing)] !font-bold !shadow-[0_8px_20px_rgba(99,102,241,0.3)] hover:!-translate-y-1 hover:!shadow-[0_12px_28px_rgba(99,102,241,0.4)] active:!translate-y-0"
+            loading={isAdding}
+            className="w-full sm:w-auto uppercase tracking-[var(--spacing)] !shadow-[0_8px_20px_rgba(200,121,65,0.3)] hover:!shadow-[0_12px_28px_rgba(200,121,65,0.4)]"
           >
             Add to Cart
           </Button>

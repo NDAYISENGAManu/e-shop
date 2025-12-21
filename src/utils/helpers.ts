@@ -1,8 +1,9 @@
 export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(price / 100);
+  return `${formatted} Rwf `;
 };
 
 export const getUniqueValues = (data: any[], type: string) => {

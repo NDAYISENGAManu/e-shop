@@ -5,17 +5,17 @@ import { Order as OrderType } from '@/types';
 interface OrderCreationAttributes extends Optional<OrderType, 'id' | 'status' | 'paymentIntentId' | 'items' | 'createdAt' | 'updatedAt'> { }
 
 class Order extends Model<OrderType, OrderCreationAttributes> implements OrderType {
-  public id!: number;
-  public userId!: number;
-  public total!: number;
-  public status!: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
-  public shippingFee!: number;
-  public paymentIntentId?: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare public id: number;
+  declare public userId: number;
+  declare public total: number;
+  declare public status: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
+  declare public shippingFee: number;
+  declare public paymentIntentId?: string;
+  declare public readonly createdAt: Date;
+  declare public readonly updatedAt: Date;
 
   // Associations
-  public readonly items?: OrderType['items'];
+  declare public readonly items?: OrderType['items'];
 }
 
 Order.init(

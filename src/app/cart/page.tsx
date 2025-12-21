@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -9,11 +8,20 @@ import { useRouter } from "next/navigation";
 import { useNotification } from "@/components/Notification";
 import Loading from "@/components/Loading";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { useEffect } from "react";
+import { formatPrice } from "@/utils/helpers";
 
 export default function CartPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const { showSuccess, showError } = useNotification();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   const {
     data: cart,
@@ -27,6 +35,7 @@ export default function CartPage() {
     },
     enabled: !!session,
   });
+
   const handleRemove = async (itemId: number) => {
     try {
       await axios.delete("/api/cart", { data: { itemId } });
@@ -37,12 +46,13 @@ export default function CartPage() {
     }
   };
 
-  if (!session) {
-    router.push("/login");
-    return null;
+  if (status === "loading" || (status === "authenticated" && isLoading)) {
+    return <Loading fullScreen text="Loading cart" />;
   }
 
-  if (isLoading) return <Loading fullScreen text="Loading cart" />;
+  if (status === "unauthenticated") {
+    return null;
+  }
 
   const items = cart?.items || [];
   const total = items.reduce(
@@ -106,14 +116,14 @@ export default function CartPage() {
                 Quantity: {item.quantity}
               </p>
               <p className="text-lg font-bold text-[#8b6f47]">
-                ${((item.product.price * item.quantity) / 100).toFixed(2)}
+                {formatPrice(item.product.price * item.quantity)}
               </p>
             </div>
             <Button
-              danger
-              size="large"
+              variant="danger"
+              size="lg"
               onClick={() => handleRemove(item.id)}
-              className="!bg-gradient-to-br from-[#dc3545] to-[#c82333] !text-white !px-6 !py-3 !h-auto !rounded-full !font-semibold !shadow-[0_4px_12px_rgba(220,53,69,0.3)] hover:!-translate-y-1 hover:!shadow-[0_6px_16px_rgba(220,53,69,0.4)] active:!translate-y-0"
+              className="!px-6 !py-3 !h-auto !shadow-[0_4px_12px_rgba(220,53,69,0.3)] hover:!-translate-y-1 hover:!shadow-[0_6px_16px_rgba(220,53,69,0.4)] active:!translate-y-0"
             >
               Remove
             </Button>
@@ -122,12 +132,12 @@ export default function CartPage() {
 
         <div className="mt-8 p-10 bg-gradient-to-br from-[#fff5eb] to-[#fef9f3] rounded-2xl text-right border-2 border-[#e8d5c4] shadow-[0_8px_24px_rgba(139,111,71,0.12)]">
           <h3 className="mb-6 text-3xl text-[#8b6f47] font-serif">
-            Total: ${(total / 100).toFixed(2)}
+            Total: {formatPrice(total)}
           </h3>
           <Button
-            type="primary"
-            size="large"
-            className="!mt-4 !bg-gradient-to-br from-[#8b6f47] to-[#d4a574] !text-white !px-10 !py-6 !h-auto uppercase !font-bold tracking-wide !rounded-full !shadow-[0_8px_20px_rgba(139,111,71,0.3)] hover:!-translate-y-1 hover:!shadow-[0_12px_28px_rgba(139,111,71,0.4)] active:!translate-y-0"
+            variant="primary"
+            size="lg"
+            className="!mt-4 !px-10 !py-6 !h-auto uppercase !font-bold tracking-wide !shadow-[0_8px_20px_rgba(139,111,71,0.3)] hover:!-translate-y-1 hover:!shadow-[0_12px_28px_rgba(139,111,71,0.4)] active:!translate-y-0"
           >
             Proceed to Checkout
           </Button>

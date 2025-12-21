@@ -7,6 +7,7 @@ import axios from "axios";
 import { Product } from "@/types";
 import { useState } from "react";
 import Loading from "@/components/Loading";
+import { formatPrice } from "@/utils/helpers";
 
 export default function ProductsPage() {
   const [category, setCategory] = useState("");
@@ -125,7 +126,7 @@ export default function ProductsPage() {
                 <footer className="p-4 px-6">
                   <h5 className="mb-2 font-normal">{product.name}</h5>
                   <p className="text-[var(--clr-primary-5)] font-semibold">
-                    ${(product.price / 100).toFixed(2)}
+                    {formatPrice(product.price)}
                   </p>
                 </footer>
               </Link>

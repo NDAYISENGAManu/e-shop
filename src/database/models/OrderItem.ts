@@ -5,17 +5,17 @@ import { OrderItem as OrderItemType } from '@/types';
 interface OrderItemCreationAttributes extends Optional<OrderItemType, 'id' | 'product' | 'createdAt' | 'updatedAt'> { }
 
 class OrderItem extends Model<OrderItemType, OrderItemCreationAttributes> implements OrderItemType {
-  public id!: number;
-  public orderId!: number;
-  public productId!: number;
-  public quantity!: number;
-  public color!: string;
-  public price!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare public id: number;
+  declare public orderId: number;
+  declare public productId: number;
+  declare public quantity: number;
+  declare public color: string;
+  declare public price: number;
+  declare public readonly createdAt: Date;
+  declare public readonly updatedAt: Date;
 
   // Associations
-  public readonly product?: OrderItemType['product'];
+  declare public readonly product?: OrderItemType['product'];
 }
 
 OrderItem.init(

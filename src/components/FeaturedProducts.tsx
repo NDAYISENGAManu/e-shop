@@ -7,6 +7,7 @@ import { Card } from "antd";
 import { Product } from "@/types";
 import Loading from "./Loading";
 import { StarFilled, HeartOutlined } from "@ant-design/icons";
+import { formatPrice } from "@/utils/helpers";
 
 const { Meta } = Card;
 
@@ -122,7 +123,7 @@ export default function FeaturedProducts() {
                         className="text-2xl font-bold bg-gradient-to-r from-[#c87941] to-[#ba6f3e] bg-clip-text text-transparent"
                         style={{ fontFamily: "'Quicksand', sans-serif" }}
                       >
-                        ${(product.price / 100).toFixed(2)}
+                        {formatPrice(product.price)}
                       </p>
 
                       <div className="flex items-center gap-1">

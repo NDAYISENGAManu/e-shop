@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { ShoppingCartOutlined, UserOutlined, HeartOutlined } from "@ant-design/icons";
-import { Badge, Space, Button } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SearchModal from "./SearchModal";
+import { Button } from "./ui/Button";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -112,29 +112,24 @@ export default function Navbar() {
           </ul>
 
           {/* Right Side Actions */}
-          <Space size="middle" className="flex items-center">
+          <div className="flex items-center gap-6">
             <SearchModal />
 
             {/* Cart Button - Handcraft Style */}
             <Link
               href="/cart"
-              className="group relative flex items-center gap-2 px-4 py-2.5 text-default hover:text-[#c87941] transition-all rounded-full hover:bg-gradient-to-r hover:from-[#c87941]/10 hover:to-[#6b7f4a]/10"
-              style={{textDecoration: 'none', color: '#7a5838', fontFamily: "'Quicksand', sans-serif"}}
+              className="group relative flex items-center gap-3 px-6 py-3 text-[#7a5838] hover:text-[#c87941] transition-all duration-500 rounded-full bg-white/40 hover:bg-white/80 border border-[#e8d5c4] shadow-sm hover:shadow-md"
+              style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              <Badge
-                count={cartItemCount}
-                size="small"
-                style={{ 
-                  backgroundColor: '#c87941', 
-                  boxShadow: '0 2px 8px rgba(200, 121, 65, 0.3)',
-                  fontFamily: "'Quicksand', sans-serif",
-                  fontWeight: 600
-                }}
-                offset={[4, -4]}
-              >
-                <ShoppingCartOutlined className="text-xl transition-transform group-hover:scale-110" />
-              </Badge>
-              <span className="font-semibold" style={{ fontFamily: "'Quicksand', sans-serif" }}>Cart</span>
+              <div className="relative flex items-center justify-center">
+                <ShoppingCartOutlined className="text-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[-8deg]" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-3 -right-3 min-w-[22px] h-[22px] flex items-center justify-center bg-gradient-to-br from-[#c87941] to-[#ba6f3e] text-white text-[11px] font-bold rounded-full px-1.5 shadow-[0_4px_10px_rgba(200,121,65,0.4)] border-2 border-[#faf8f3] animate-in zoom-in duration-300">
+                    {cartItemCount}
+                  </span>
+                )}
+              </div>
+              <span className="font-bold tracking-wide">Cart</span>
             </Link>
 
             {session ? (
@@ -149,10 +144,9 @@ export default function Navbar() {
                   </Link>
                 )}
                 <Button
-                  type="primary"
+                  variant="primary"
                   onClick={() => signOut()}
-                  className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-7 !py-2.5 !h-auto !font-bold !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)] hover:!-translate-y-0.5 !transition-all"
-                  style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '0.5px' }}
+                  className="!px-7 !py-2.5 !h-auto !shadow-[0_4px_16px_rgba(139,90,60,0.25)] hover:!shadow-[0_6px_20px_rgba(139,90,60,0.35)]"
                 >
                   Logout
                 </Button>
@@ -167,7 +161,7 @@ export default function Navbar() {
                 </button>
               </Link>
             )}
-          </Space>
+          </div>
         </div>
       </div>
       

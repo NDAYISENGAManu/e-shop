@@ -6,6 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
+import { formatPrice } from "@/utils/helpers";
 
 export default function SearchModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -90,7 +91,7 @@ export default function SearchModal() {
                     {product.category}
                   </p>
                   <p className="text-[#d4a574] font-bold text-lg mt-2">
-                    ${(product.price / 100).toFixed(2)}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>

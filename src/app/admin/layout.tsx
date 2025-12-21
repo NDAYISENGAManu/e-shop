@@ -15,6 +15,7 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import { signOut } from "next-auth/react";
+import { useEffect } from "react";
 
 const { Sider, Content } = Layout;
 
@@ -26,6 +27,12 @@ export default function AdminLayout({
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (status === "unauthenticated" || (status === "authenticated" && session?.user?.role !== "admin")) {
+      router.push("/");
+    }
+  }, [status, session, router]);
 
   if (status === "loading") {
     return (
@@ -39,7 +46,6 @@ export default function AdminLayout({
   }
 
   if (status === "unauthenticated" || session?.user?.role !== "admin") {
-    router.push("/");
     return null;
   }
 

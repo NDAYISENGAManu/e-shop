@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Card, Table, Tag, Statistic } from "antd";
+import { Table } from "@/components/ui/Table";
 import {
   ShoppingOutlined,
   UserOutlined,
@@ -10,6 +10,7 @@ import {
   RiseOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import { formatPrice } from "@/utils/helpers";
 
 export default function AdminDashboard() {
   const { data: stats } = useQuery({
@@ -31,13 +32,13 @@ export default function AdminDashboard() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "delivered":
-        return "#6b7f4a";
+        return "bg-green-100 text-green-700 border-green-200";
       case "processing":
-        return "#c87941";
+        return "bg-orange-100 text-orange-700 border-orange-200";
       case "pending":
-        return "#d4a574";
+        return "bg-yellow-100 text-yellow-700 border-yellow-200";
       default:
-        return "#8b6f47";
+        return "bg-gray-100 text-gray-700 border-gray-200";
     }
   };
 
@@ -67,7 +68,7 @@ export default function AdminDashboard() {
       key: "total",
       render: (total: number) => (
         <span className="font-bold text-[#c87941]" style={{ fontFamily: "'Quicksand', sans-serif" }}>
-          ${((total || 0) / 100).toFixed(2)}
+          {formatPrice(total || 0)}
         </span>
       ),
     },
@@ -76,13 +77,12 @@ export default function AdminDashboard() {
       dataIndex: "status",
       key: "status",
       render: (status: string) => (
-        <Tag 
-          color={getStatusColor(status)} 
-          className="uppercase font-semibold px-3 py-1 rounded-full"
-          style={{ fontFamily: "'Quicksand', sans-serif", border: 'none' }}
+        <span 
+          className={`uppercase text-[10px] font-bold px-3 py-1 rounded-full border ${getStatusColor(status)}`}
+          style={{ fontFamily: "'Quicksand', sans-serif" }}
         >
           {status}
-        </Tag>
+        </span>
       ),
     },
     {
@@ -124,7 +124,7 @@ export default function AdminDashboard() {
     },
     {
       title: "Total Revenue",
-      value: `$${((stats?.totalRevenue || 0) / 100).toFixed(2)}`,
+      value: formatPrice(stats?.totalRevenue || 0),
       icon: <DollarOutlined />,
       gradient: "from-[#6b7f4a] to-[#5a6d3d]",
       lightBg: "bg-[#6b7f4a]/10",
@@ -133,56 +133,56 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12 animate-[fadeIn_0.5s_ease-out]">
       {/* Page Header */}
-      <div className="bg-white rounded-3xl p-8 shadow-[0_4px_20px_rgba(139,90,60,0.12)] border-2 border-[#e8d5c4]">
-        <div className="flex items-center gap-4">
-          <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-[#c87941] to-[#6b7f4a] flex items-center justify-center shadow-lg">
-            <RiseOutlined className="text-white text-3xl" />
+      <div className="bg-white/70 backdrop-blur-md rounded-[3rem] p-10 shadow-[0_20px_50px_rgba(139,90,60,0.1)] border-2 border-[#e8d5c4]/50">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-[#c87941] to-[#6b7f4a] flex items-center justify-center shadow-2xl rotate-3">
+            <RiseOutlined className="text-white text-5xl" />
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <h1 
-              className="text-4xl font-bold text-[#2d2416] mb-1"
+              className="text-6xl font-bold text-[#2d2416] mb-3"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
-              Dashboard Overview
+              Artisan Dashboard
             </h1>
             <p 
-              className="text-[#7a5838]"
+              className="text-xl text-[#7a5838] font-medium"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Monitor your handcraft marketplace performance
+              Surveillance of your marketplace's performance and prosperity
             </p>
           </div>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {statCards.map((stat, index) => (
           <div
             key={index}
-            className={`group relative ${stat.lightBg} rounded-2xl p-6 border-2 ${stat.border} shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer overflow-hidden`}
+            className={`group relative ${stat.lightBg} rounded-[2rem] p-8 border-2 ${stat.border} shadow-[0_10px_30px_rgba(139,90,60,0.05)] hover:shadow-[0_20px_50px_rgba(139,90,60,0.15)] transition-all duration-500 hover:-translate-y-2 cursor-default overflow-hidden`}
           >
             {/* Background gradient effect */}
             <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
             
             <div className="relative z-10">
-              <div className="flex items-start justify-between mb-4">
-                <div className={`w-24 h-24 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+              <div className="flex items-start justify-between mb-8">
+                <div className={`w-28 h-28 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center text-white text-4xl shadow-xl group-hover:scale-110 transition-transform duration-500`}>
                   {stat.icon}
                 </div>
               </div>
               
-              <div>
+              <div className="space-y-2">
                 <p 
-                  className="text-[#7a5838] text-sm font-semibold uppercase tracking-wider mb-2"
+                  className="text-[#7a5838] text-sm font-bold uppercase tracking-[0.2em]"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 >
                   {stat.title}
                 </p>
                 <p 
-                  className="text-4xl font-bold text-[#2d2416]"
+                  className="text-5xl font-bold text-[#2d2416]"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 >
                   {stat.value}
@@ -190,37 +190,34 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Decorative corner */}
-            <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-white/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+            {/* Decorative element */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
           </div>
         ))}
       </div>
 
       {/* Recent Orders Table */}
-      <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgba(139,90,60,0.12)] border-2 border-[#e8d5c4] overflow-hidden">
-        <div className="p-6 border-b-2 border-[#e8d5c4] bg-gradient-to-r from-[#faf8f3] to-[#fff5eb]">
+      <div className="bg-white/80 backdrop-blur-sm rounded-[3rem] shadow-[0_15px_45px_rgba(139,90,60,0.1)] border-2 border-[#e8d5c4] overflow-hidden">
+        <div className="p-10 border-b-2 border-[#e8d5c4] bg-gradient-to-r from-[#faf8f3] to-[#fff5eb]">
           <h2 
-            className="text-3xl font-bold text-[#2d2416]"
+            className="text-5xl font-bold text-[#2d2416]"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Recent Orders
+            Recent Acquisitions
           </h2>
           <p 
-            className="text-[#7a5838] mt-1"
+            className="text-[#7a5838] mt-2 font-medium"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
-            Latest transactions from your customers
+            The latest exchange of artisan treasures from around the globe
           </p>
         </div>
         
-        <div className="p-6">
+        <div className="p-10">
           <Table
             dataSource={recentOrders}
             columns={columns}
             rowKey="id"
-            pagination={false}
-            className="handcraft-table w-full"
-            rowClassName="hover:bg-[#faf8f3] transition-colors"
           />
         </div>
       </div>

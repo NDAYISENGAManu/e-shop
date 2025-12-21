@@ -5,15 +5,15 @@ import { Settings as SettingsType } from '@/types';
 interface SettingsCreationAttributes extends Optional<SettingsType, 'id' | 'createdAt' | 'updatedAt'> { }
 
 class Settings extends Model<SettingsType, SettingsCreationAttributes> implements SettingsType {
-    public id!: number;
-    public storeName!: string;
-    public email!: string;
-    public phone!: string;
-    public shippingFee!: number;
-    public freeShippingThreshold!: number;
-    public taxRate!: number;
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    declare public id: number;
+    declare public storeName: string;
+    declare public email: string;
+    declare public phone: string;
+    declare public shippingFee: number;
+    declare public freeShippingThreshold: number;
+    declare public taxRate: number;
+    declare public readonly createdAt: Date;
+    declare public readonly updatedAt: Date;
 }
 
 Settings.init(

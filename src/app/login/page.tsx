@@ -3,8 +3,11 @@
 import { useState, useEffect, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Form, Input, Button, Typography } from "antd";
+import { Form, Typography } from "antd";
 import Link from "next/link";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 
 const { Title, Text } = Typography;
 
@@ -83,22 +86,14 @@ function LoginForm() {
               },
             ]}
           >
-            <Input
-              size="large"
-              placeholder="Email"
-              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] !w-full focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
-            />
+            <Input placeholder="Email" />
           </Form.Item>
 
           <Form.Item
             name="password"
             rules={[{ required: true, message: "Please enter your password" }]}
           >
-            <Input
-              size="large"
-              placeholder="Password"
-              className="!p-4 !border-2 !border-[#e8d5c4] !rounded-xl !bg-[#fef9f3] !w-full focus:!border-[#d4a574] focus:!bg-white focus:!shadow-[0_0_0_3px_rgba(212,165,116,0.1)]"
-            />
+            <PasswordInput placeholder="Password" />
           </Form.Item>
 
           <div className="text-right">
@@ -117,11 +112,11 @@ function LoginForm() {
           )}
 
           <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
+            type="submit"
+            size="lg"
             loading={loading}
-            className="w-full !bg-gradient-to-br from-[#8b6f47] to-[#d4a574] !h-auto !py-4 uppercase tracking-wider !font-bold !shadow-[0_8px_20px_rgba(139,111,71,0.3)] hover:!-translate-y-1 hover:!shadow-[0_12px_28px_rgba(139,111,71,0.4)] active:!translate-y-0"
+            fullWidth
+            className="uppercase tracking-wider !py-4"
           >
             {loading ? "Logging in..." : "Login"}
           </Button>

@@ -67,10 +67,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const userId = (session.user as any).id;
-    const { productId, quantity, color } = await request.json();
+    const userId = parseInt((session.user as any).id);
+    const body = await request.json();
+    const { productId, quantity, color } = body;
 
-    // Fetch product to check stock
+    if (!productId || !quantity) {
+      return NextResponse.json({ error: 'Product ID and quantity are required' }, { status: 400 });
+    }
+
     const product = await Product.findByPk(productId);
     if (!product) {
       return NextResponse.json(
@@ -79,13 +83,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let cart = await Cart.findOne({ where: { userId } });
+    const [cart] = await Cart.findOrCreate({
+      where: { userId },
+      defaults: { userId }
+    });
 
     if (!cart) {
-      cart = await Cart.create({ userId });
+      return NextResponse.json({ error: 'Failed to initialize cart' }, { status: 500 });
     }
 
-    // Check if item already exists in cart
     const existingItem = await CartItem.findOne({
       where: {
         cartId: cart.id,
@@ -116,7 +122,6 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Fetch updated cart
     const updatedCart = await Cart.findByPk(cart.id, {
       include: [
         {

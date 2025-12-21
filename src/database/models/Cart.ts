@@ -5,13 +5,13 @@ import { Cart as CartType } from '@/types';
 interface CartCreationAttributes extends Optional<CartType, 'id' | 'items' | 'createdAt' | 'updatedAt'> { }
 
 class Cart extends Model<CartType, CartCreationAttributes> implements CartType {
-  public id!: number;
-  public userId!: number;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare public id: number;
+  declare public userId: number;
+  declare public readonly createdAt: Date;
+  declare public readonly updatedAt: Date;
 
   // Associations
-  public readonly items?: CartType['items'];
+  declare public readonly items?: CartType['items'];
 }
 
 Cart.init(

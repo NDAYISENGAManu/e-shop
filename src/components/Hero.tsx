@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button, Typography } from "antd";
-
-const { Title, Paragraph } = Typography;
+import { Button } from "@/components/ui/Button";
 
 export default function Hero() {
   return (
@@ -45,9 +43,8 @@ export default function Hero() {
           </div>
 
           {/* Main Headline */}
-          <Title
-            level={1}
-            className="!text-6xl !mb-0 !leading-[1.1] md:!text-7xl"
+          <h1
+            className="text-6xl mb-0 leading-[1.1] md:text-7xl font-light"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             <span className="block text-[#2d2416] font-bold">
@@ -56,7 +53,7 @@ export default function Hero() {
             <span className="block mt-2 bg-gradient-to-r from-[#c87941] via-[#ba6f3e] to-[#6b7f4a] bg-clip-text text-transparent font-extrabold">
               Art of Handcraft
             </span>
-          </Title>
+          </h1>
 
           {/* Handwritten Accent */}
           <div 
@@ -67,22 +64,22 @@ export default function Hero() {
           </div>
 
           {/* Description */}
-          <Paragraph 
-            className="!text-lg !leading-relaxed !text-[#5a4a3a] !mb-8 max-w-[550px]"
+          <p 
+            className="text-lg leading-relaxed text-[#5a4a3a] mb-8 max-w-[550px]"
             style={{ fontFamily: "'Quicksand', sans-serif" }}
           >
             Every piece tells a unique story of tradition, creativity, and soul.
             Browse our curated collection of handmade treasures, each crafted with
             dedication and heart by talented artisans from around the world.
-          </Paragraph>
+          </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 items-center">
             <Link href="/products">
               <Button
-                size="large"
-                type="primary"
-                className="!bg-gradient-to-r !from-[#c87941] !to-[#ba6f3e] !border-none !rounded-full !px-10 !py-7 !h-auto !text-lg !font-bold !shadow-[0_8px_24px_rgba(200,121,65,0.3)] hover:!shadow-[0_12px_32px_rgba(200,121,65,0.4)] hover:!-translate-y-1 !transition-all group"
+                size="lg"
+                variant="primary"
+                className="!px-10 !py-7 !h-auto !text-lg !font-bold !shadow-[0_8px_24px_rgba(200,121,65,0.3)] hover:!shadow-[0_12px_32px_rgba(200,121,65,0.4)] hover:!-translate-y-1 !transition-all group"
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
                 <span className="flex items-center gap-3">
@@ -94,8 +91,9 @@ export default function Hero() {
             
             <Link href="/about">
               <Button
-                size="large"
-                className="!bg-white/80 !backdrop-blur-sm !border-2 !border-[#c87941] !text-[#c87941] !rounded-full !px-10 !py-7 !h-auto !text-lg !font-bold hover:!bg-[#c87941] hover:!text-white !transition-all hover:!-translate-y-1 hover:!shadow-lg"
+                size="lg"
+                variant="outline"
+                className="!px-10 !py-7 !h-auto !text-lg !font-bold !transition-all hover:!-translate-y-1 hover:!shadow-lg"
                 style={{ fontFamily: "'Quicksand', sans-serif", letterSpacing: '1px' }}
               >
                 Our Story
