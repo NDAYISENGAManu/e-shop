@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,6 +22,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No files uploaded' }, { status: 400 });
     }
 
+    // Ensure upload directory exists
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'products');
+    try {
+      await mkdir(uploadDir, { recursive: true });
+    } catch (error) {
+      console.error("Error creating directory:", error);
+    }
+
     const uploadedImages = [];
 
     for (const file of files) {
@@ -31,7 +39,7 @@ export async function POST(request: NextRequest) {
       // Generate unique filename
       const ext = path.extname(file.name);
       const filename = `${uuidv4()}${ext}`;
-      const filepath = path.join(process.cwd(), 'public', 'uploads', 'products', filename);
+      const filepath = path.join(uploadDir, filename);
 
       // Save file
       await writeFile(filepath, buffer);
