@@ -108,12 +108,23 @@ export default function AdminProducts() {
       colors: values.colors ? values.colors.map((c: string) => ({ color: c })) : [],
     };
 
-    if (values.images?.fileList && values.images.fileList.length > 0) {
+    // Handle images
+    const rawImages = values.images;
+    const fileList = Array.isArray(rawImages) ? rawImages : rawImages?.fileList || [];
+    
+    const newFiles = fileList.filter((f: any) => f.originFileObj);
+    const existingFiles = fileList.filter((f: any) => !f.originFileObj);
+    
+    let finalImages: any[] = existingFiles.map((f: any) => ({
+      url: f.url,
+      filename: f.name,
+      isPrimary: f.originalData?.isPrimary || false,
+    }));
+
+    if (newFiles.length > 0) {
       const imageFormData = new FormData();
-      values.images.fileList.forEach((file: any) => {
-        if (file.originFileObj) {
-          imageFormData.append("images", file.originFileObj);
-        }
+      newFiles.forEach((file: any) => {
+        imageFormData.append("images", file.originFileObj);
       });
 
       try {
@@ -124,11 +135,16 @@ export default function AdminProducts() {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        data.images = uploadResponse.data.images;
+        finalImages = [...finalImages, ...uploadResponse.data.images];
       } catch (error) {
-        showError("Failed to upload images");
+        showError("Failed to upload new images");
         return;
       }
+    }
+
+    // Only set images field if we have processed images (create or update)
+    if (fileList.length > 0 || values.images !== undefined) {
+       data.images = finalImages;
     }
 
     saveMutation.mutate(data);
@@ -146,6 +162,13 @@ export default function AdminProducts() {
       featured: product.featured,
       shipping: product.shipping,
       colors: product.colors?.map((c: any) => c.color) || [],
+      images: product.images?.map((img: any) => ({
+        uid: img.id,
+        name: img.filename,
+        status: 'done',
+        url: img.url,
+        originalData: img,
+      })) || [],
     });
     setShowModal(true);
   };
