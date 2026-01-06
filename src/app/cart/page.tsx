@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -127,6 +127,7 @@ export default function CartPage() {
               className="!px-6 !py-3 !h-auto !shadow-[0_4px_12px_rgba(220,53,69,0.3)] hover:!-translate-y-1 hover:!shadow-[0_6px_16px_rgba(220,53,69,0.4)] active:!translate-y-0"
             >
               {t.common.remove}
+              <DeleteOutlined className="ml-2" />
             </Button>
           </div>
         ))}
