@@ -10,8 +10,8 @@ const optimizedConfig = {
   logging: env === 'development' ? console.log : false,
   // Optimize connection pool
   pool: {
-    max: env === 'production' ? 20 : 5, // Maximum connections
-    min: env === 'production' ? 5 : 1, // Minimum connections
+    max: env === 'production' ? 5 : 5, // Reduce max connections for serverless
+    min: 0, // No minimum connections for serverless to handle cold starts/idle better
     acquire: 60000, // Maximum time (ms) to get connection
     idle: 10000, // Maximum time (ms) connection can be idle
   },
