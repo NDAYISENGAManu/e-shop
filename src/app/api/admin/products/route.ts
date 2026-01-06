@@ -17,7 +17,7 @@ const createProductSchema = z.object({
   shipping: z.boolean().optional(),
   stock: z.number().int().min(0).optional(),
   images: z.array(z.object({
-    url: z.string().url(),
+    url: z.string().min(1),
     filename: z.string(),
     isPrimary: z.boolean().optional(),
     width: z.number().optional(),
